@@ -1,0 +1,144 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ include file="common/private.jsp" %>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <base href="<%=basePath%>">
+    
+    <title>商品管理</title>
+    
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+	<!--
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	-->
+	<link rel="stylesheet" href="css/select.css" type="text/css"></link>
+	<link rel="stylesheet" href="css/userManager1.css" type="text/css"></link>
+  <link rel="stylesheet" href="css/common/common1.css" type="text/css"></link>
+  <link rel="stylesheet" href="css/common/dialog.css" type="text/css"></link>
+  <link rel="stylesheet" href="css/common/grid.css" type="text/css"></link>
+  
+  <script type="text/javascript" src="js/jquery-1.8.3.js"></script>
+  <script type="text/javascript" src="js/common/util.js"></script>
+  <script type="text/javascript" src="js/common/dialog.js"></script>
+  <script type="text/javascript" src="js/common/grid.js"></script>
+  <script type="text/javascript" src="js/select.js"></script>
+  <script type="text/javascript" src="js/goods.js"></script>
+  
+  
+  
+  <style type="text/css">
+  	.conText{
+  		width:76px;
+  	}
+  	.grdiTD{
+  		height:60px;
+  	}
+  	
+  	.conditianTable{
+  		height: 90px;
+  	}
+  
+  	.txtShow{
+	    padding: 1px 60px 1px 5px;
+  		width:0px;
+  	}
+  	
+  	input[type="text"]{
+	    padding: 6px 10px;
+  	}
+  </style>
+  </head>
+  
+  <body>
+  	<div id="manageTitle">商品管理</div>
+  	<div id="manageSubTitle">显示系统中所有商品，您可以根据条件对商品信息进行增删改查</div>
+  	<div id="condition">
+  		<div id="queryTitle">查询条件</div>
+  		<div id="querySubTitle">您可以根据提示填写要查询的条件，点击操作按钮，会根据您的条件来显示信息</div>
+  	</div>
+  	
+  
+  	<div class="conditianTable">
+  		<div class="conditionRow">
+  			<div class="line" style="height:45px">
+				<div class="conditionCols conText">商品名称</div>
+				<div class="conditionCols">
+					<input type="text" class="txt" id="txtGoodsName" placeholder="请输入商品描述"
+						maxlength="20" validate="cenm_" minLen="" />
+				</div>
+				<div class="conditionCols conText">卖家姓名</div>
+				<div class="conditionCols">
+					<input type="text" class="txt" id="txtUserName" placeholder="请输入商品名称"
+						maxlength="20" validate="cenm_" minLen="" />
+				</div>
+				<div class="conditionCols conText" style="width:60px">分类</div>
+
+				<div class="conditionCols">
+					<div id="sltGoodsType" class="conditionSlt"></div>
+				</div>
+
+			</div>
+  		
+  			<div class="line">
+  				<div class="conditionCols conText">商品价格</div>
+  				<div class="conditionCols" style="width:85px;margin-right:5px">
+					<div id="sltGoodsPrice" class="conditionSlt" ></div>
+				</div>
+  				<div class="conditionCols">
+					<input type="text" class="txt" id="txtGoodsPrice"
+						maxlength="20" validate="n" minLen="" />
+				</div>
+				
+				<div class="conditionCols conText">商品库存</div>
+				<div class="conditionCols" style="width:85px;margin-right:5px">
+					<div id="sltGoodsNum" class="conditionSlt" ></div>
+				</div>
+  				<div class="conditionCols">
+					<input type="text" class="txt" id="txtGoodsNum"
+						maxlength="20" validate="n" minLen="" />
+				</div>
+				
+				
+				<div class="conditionCols conText" style="width:60px">商品销量</div>
+
+				<div class="conditionCols" style="width:85px;margin-right:5px">
+					<div id="sltGoodsSales" class="conditionSlt" ></div>
+				</div>
+  				<div class="conditionCols">
+					<input type="text" class="txt" id="txtGoodsSales"
+						maxlength="20" validate="n" minLen="" />
+				</div>
+  			</div>
+  			
+  			
+  		</div>
+  	</div>
+  	
+  	
+  	<div class="messageBar">
+  		<div class="userMessageTitle">商品信息</div>
+  		<div class="messageBtns">
+  			<input type="button" class="btnGrid" value="查询" id="btnQuery"/>
+  			<input type="button" class="btnGrid" value="添加" id="btnAdd"/>
+  			<input type="button" class="btnGrid" value="修改" id="btnUpdate"/>
+  			<input type="button" class="btnGrid" value="删除" id="btnDelete"/>
+  		</div>
+  	</div>
+  	
+  	<div id="myGrid"></div>
+  	
+ 	<div id="imgShowCon" class="hidden">
+ 		<div class="imgCon"></div>
+ 		<div class="xf">
+ 		
+ 		</div>
+ 	</div>
+  	
+  	
+  </body>
+</html>

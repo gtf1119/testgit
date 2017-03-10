@@ -1,0 +1,65 @@
+#main{
+	
+	overflow:hidden;
+}
+
+.serviceIcon_sep{
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: url(../../image/taobao/service.png);
+    background-position: 73px 266px;
+}
+
+.serviceIcon_jin{
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: url(../../image/taobao/service.png);
+    background-position: 48px 59px;
+}
+
+.serviceIcon_pei{
+ 	display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: url(../../image/taobao/service.png);
+    background-position: 47px 266px;
+}
+
+.page{
+    background: #f7f7f7;
+}
+
+.pageBtn{
+	border: 0;
+	
+}
+
+.pageBtn:hover{
+	background:#ff7166;
+}
+
+.page .select{
+    border: 1px solid #afafaf;
+	background: white;
+
+}
+
+.pageTable{
+	color:#292929;
+}
+
+.page .selList{
+	border:1px solid #afafaf;
+	background:white;
+}
+
+
+.gender:hover{
+	background: #ffcfcb;
+}
+
+.defaultSelected {
+    background: #ff7e74;
+}

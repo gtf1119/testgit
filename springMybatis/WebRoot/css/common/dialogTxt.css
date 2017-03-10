@@ -1,0 +1,66 @@
+#dialog{
+	width:400px;
+
+	border:1px solid #0f9bda;
+	position:absolute;
+	top:calc(50% - 200px);
+	left:calc(50% - 200px);
+	z-index:10;
+}
+
+#titleBar{
+    background-color:#42bdf5;
+}
+#titleTxt{
+	color:white;
+    padding: 5px 15px;
+}
+
+#btnClose{
+	position: absolute;
+    top: 4px;
+    right: 5px;
+    width: 23px;
+    border: 1px solid #129fe0;
+    text-align: center;
+    user-select:none;
+}
+
+#btnClose:hover{
+	background:#78caef;
+}
+#btnClose:active{
+	background: #129ddc;
+}
+#replaceDiv{
+	padding: 50 49px;
+	background:white;
+}
+.line{
+	padding:15px 15px;
+}
+
+.txtWord{
+    width: 100%;
+    border-radius: 3px;
+    outline: none;
+    border: 1px solid #88d7fb;
+}
+#btnBack{
+	float:right;
+}
+
+.btn{
+	outline:none;
+    padding: 5px 44px;
+    font-size: 15px;
+    background: #16aef3;
+    border-radius: 5px;
+    color: white;
+    user-select:none;
+}
+
+table{
+	font-size:14px;
+	color:#4e4b4b;
+}

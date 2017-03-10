@@ -1,0 +1,240 @@
+body {
+	
+}
+
+#chatroom {
+	width: 900px;
+	height: 550px;
+}
+
+#logoContainer {
+	font-size: 24px;
+	color: #fff;
+	min-height: 50px;
+	background-image: linear-gradient(to right, #a3d1f6, #095da0);
+	border-bottom: 1px solid #9ecdf3;
+	padding-left: 20px;
+	height: 5.5%;
+	box-sizing: border-box;
+}
+
+#chatContainer {
+	min-width: 1300px;
+	height: 94.5%;
+}
+
+#userList {
+	float: left;
+	width: 130px;
+	background-color: #a2d0f5;
+	height: 100%;
+}
+
+#messageContainer {
+	float: left;
+	height: 100%;
+	width: calc(100% -               700px);
+	min-width: 600px;
+	box-sizing: border-box;
+}
+
+#messageList {
+	height: 75%;
+	border-bottom: 1px solid #ddd;
+	overflow: auto;
+	box-sizing: border-box;
+}
+
+#sendMessage {
+	width: 100%;
+	position: relative;
+	height: 13%;
+}
+
+#messageTxt {
+	width: 100%;
+	height: 100%;
+	resize: none;
+	outline: none;
+	border: none;
+	padding: 5px 10px;
+	line-height: 22px;
+	color: #666;
+}
+
+#sendBtnArea {
+	float: right;
+	padding: 15px 0;
+	font-size: 13px;
+	color: #666;
+	width: 100%;
+}
+
+#sendBtn {
+	background-color: #fff;
+	border: 1px solid #ddd;
+	color: #666;
+	border-radius: 3px;
+	padding: 4px 40px;
+	margin: 0 30px 0 10px;
+}
+
+.msgLine {
+	color: #666;
+	font-size: 14px;
+	position: relative;
+	padding: 3px;
+	margin: 15px 10px;
+	overflow: hidden;
+}
+
+.userFace {
+	border-radius: 50%;
+}
+
+.userInfo {
+	position: relative;
+	top: -12px;
+	margin-left: 10px;
+}
+
+.msgContent {
+	margin-top: 10px;
+	padding: 10px 10px 10px 10px;
+	line-height: 22px;
+	background-color: #2196F3;
+	display: table;
+	border-radius: 5px;
+	max-width: 500px;
+	color: #fff;
+	margin-left: 45px;
+}
+
+.msgContent::selection {
+	background-color: #f0f0f0;
+	color: #666;
+}
+
+#rightSide {
+	width: 170px;
+	height: 100%;
+	background-color: #f0f0f0;
+	float: left;
+	height: 100%;
+}
+
+.msgLine.me>.msgContent {
+	float: right;
+	background-color: #dcdcdc;
+	color: #666;
+	margin-right: 45px;
+}
+
+.msgLine.me>.msgContent::selection {
+	background-color: #fff;
+}
+
+.msgLine.me>.userFace {
+	float: right;
+}
+
+.msgLine.me .userInfo {
+	margin-right: 10px;
+}
+
+.msgLine.me>.userFaceContainer {
+	text-align: right;
+}
+
+#tips {
+	font-size: 13px;
+	color: #666;
+}
+
+#userListTitle {
+	font-size: 24px;
+	font-weight: 300;
+	text-align: center;
+	margin: 10px 0 0px 0px;
+	color: white
+}
+
+#logoTxt {
+	padding-top: 8px;
+	display: inline-block;
+}
+
+.userItem {
+	margin: 15px 0;
+	padding: 5px 0 5px 40px;
+	cursor: pointer;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.userItem>img {
+	width: 35px;
+	height: 35px;
+	border-radius: 50%;
+	margin-right: 10px;
+}
+
+.userItem>.username {
+	position: relative;
+	top: -12px;
+	color: #666;
+	font-size: 14;
+}
+
+.selectUserItem {
+	background-color: #fff;
+}
+
+#logoContainer>img {
+	border-radius: 50%;
+	position: relative;
+	top: 8px;
+	left: 30px;
+}
+
+#logoUsername {
+	font-size: 13px;
+	position: relative;
+	left: 30;
+	top: -1px;
+}
+
+#exitBtn {
+	float: right;
+	font-size: 16px;
+	position: relative;
+	top: 15px;
+	right: 20px;
+	cursor: pointer;
+}
+
+#autoScollBtn {
+	position: relative;
+	top: 2px;
+	margin-left: 30px;
+}
+
+#sendBtnDiv {
+	float: right;
+}
+
+.loginTime {
+	font-size: 12px;
+	color: #666;
+	position: relative;
+	top: -12px;
+	left: 20px;
+}
+
+.gg {
+	width: 164px;
+	height: 243px;
+	margin-top: 15px;
+	margin-left: 3px;
+}

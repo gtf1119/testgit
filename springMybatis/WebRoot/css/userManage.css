@@ -1,0 +1,51 @@
+*{
+	font-family:"Microsoft YaHei";
+}
+
+
+#container{
+
+    width:100%;
+    margin:0 auto;
+}
+
+#queryTitle{
+    padding: 10px 0 10px 10px;
+    font-size: 16px;
+    border: 1px solid #d1d8e0;
+    font-weight: 600;
+    background: #f3f9ff;
+}
+
+#selTitle{
+	padding:0 0 0 10px;
+}
+
+.line{
+    padding: 25px 0px;
+}
+
+.txt{
+    margin: 0px 26px;
+    outline:none;
+}
+
+#btnQuery{
+    margin: 0px 91px;
+   
+    background:#4fc6fb;
+    border-radius: 3px;
+    outline:none;
+    user-select:none;
+    cursor:pointer;
+    padding: 6px 14px;
+}
+
+.btn:hover{
+    background: whitesmoke;
+}
+
+.btn:active{
+    background: #ddddde;
+}
+

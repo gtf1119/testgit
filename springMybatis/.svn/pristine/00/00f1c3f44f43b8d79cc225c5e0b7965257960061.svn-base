@@ -1,0 +1,80 @@
+package com.ggg.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.ggg.pojo.Chat;
+import com.ggg.pojo.GridCondition;
+import com.ggg.pojo.GridJSON;
+import com.ggg.pojo.ResJSON;
+import com.ggg.pojo.User;
+import com.ggg.service.ChatService;
+import com.ggg.service.UserService;
+
+@Controller
+public class ChatController {
+
+	@Autowired
+	private ChatService chatService;
+	
+	
+	@Autowired
+	private UserService userService;
+	
+	@RequestMapping("/queryAllTxt")
+	@ResponseBody
+	public List<Chat> queryAllTxt(HttpServletRequest request,HttpServletResponse response) throws Exception{
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		if (user == null) {
+			return new ArrayList<Chat>();
+		}
+		String uid = user.getId();
+		String lastid = request.getParameter("lastid");
+		String recid = request.getParameter("recid");
+		String condition = null;
+		if(recid == null || recid == "")
+			condition = lastid.equals("getAll") ? " WHERE  NVL(C.REC_ID,'null') = 'null' ORDER BY C.CREATETIME" : " WHERE  NVL(C.REC_ID,'null') = 'null' AND C.CREATETIME > (SELECT CREATETIME FROM T_CHAT WHERE T_CHAT.ID='"+lastid+"') ORDER BY C.CREATETIME";
+		else
+			condition = lastid.equals("getAll") ? " WHERE C.REC_ID='"+recid+"' AND C.USER_ID='"+uid+"' OR C.REC_ID='"+uid+"' AND C.USER_ID='"+recid+"'" : " WHERE (C.REC_ID='"+recid+"' AND C.USER_ID='"+uid+"' OR C.REC_ID='"+uid+"' AND C.USER_ID='"+recid+"') AND  C.CREATETIME > (SELECT CREATETIME FROM T_CHAT WHERE T_CHAT.ID='"+lastid+"')  ORDER BY C.CREATETIME";
+		List<Chat> list =  chatService.queryAllTxt(condition);
+		
+		
+		return list;
+	}
+	
+	
+	@RequestMapping("/addMsg")
+	@ResponseBody
+	public ResJSON addMsg(HttpServletRequest request,HttpServletResponse response) throws Exception{
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("user");
+		if(user == null){
+			return new ResJSON();
+		}
+		ResJSON json = new ResJSON();
+		String txt = request.getParameter("txt");
+		String userid = user.getId();
+		String recid = request.getParameter("recid");
+		try {
+			User loginuser = userService.queryUserById(userid);
+			if(recid == null || recid =="")
+				recid = "";
+			chatService.addMsg(new Chat(txt,loginuser,recid));
+			json.setIsSuccess("true");
+		} catch (Exception e) {
+			json.setIsSuccess("false");
+			json.setErrMsg(e.getMessage());
+		}
+		return json;
+	}
+}

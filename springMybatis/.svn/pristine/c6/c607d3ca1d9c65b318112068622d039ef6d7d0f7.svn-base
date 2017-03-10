@@ -1,0 +1,46 @@
+* {
+	font-family: 'Microsoft YaHei';
+}
+
+#grid {
+	margin-top: 50px;
+}
+
+.grid {
+	border-left: 1px solid #e0e0e0;
+	border-top: 2px solid #148ffd;
+}
+
+.gridTR:first-child {
+	background-color: #f6fbff;
+}
+
+.grdiTD {
+	border-right: 1px solid #e0e0e0;
+	border-bottom: 1px solid #e0e0e0;
+	padding: 5px 10px;
+}
+
+#demo{
+	width:200px;
+	height: 200px;
+	background:black;
+}
+
+#child{
+	width:100px;
+	height: 100px;
+	background:red;
+	
+	
+}
+#demo2{
+	width:200px;
+	height: 200px;
+	background:black;
+}
+
+#child2{
+	width:100px;
+	height: 100px;
+	background:red;

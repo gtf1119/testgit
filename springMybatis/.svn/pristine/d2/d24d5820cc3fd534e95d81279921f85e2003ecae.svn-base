@@ -1,0 +1,96 @@
+$(function(){
+	shopCartNum.init({
+		rendTo : ".cartNum",
+		dataSource : "queryAllCartCount.action"
+	});
+
+	classification.init({
+		rendTo : "#menu",
+		dataSource :"queryGoodTypeInMenu.action"
+	});
+	
+	goodsList.init({
+		rendTo: "#main",
+		dataSource:"queryAllGoods.action"
+	});
+	
+	
+	$("#menu").on("click",".menuItem",function(){
+		var con = $(this).find(".classifi").text();
+		con = " WHERE T.NAME = '"+con+"' AND 1=1";
+		
+		goodsList.init({
+			rendTo: "#main",
+			dataSource:"queryAllGoods.action",
+			ajaxData:{
+				condition : con
+			}
+		});
+	});
+	
+	
+	$("#btnSearch").click(function(){
+		var con = " WHERE G.NAME LIKE '%"+ $("#txtSearch").val()+"%' AND 1=1 ";
+		goodsList.init({
+			rendTo: "#main",
+			dataSource:"queryAllGoods.action",
+			ajaxData:{
+				condition : con
+			}
+		});
+	});
+	
+	$("#btnSearchHidden").click(function(){
+		var con = " WHERE G.NAME LIKE '%"+ $("#txtSearchHidden").val()+"%' AND 1=1 ";
+		goodsList.init({
+			rendTo: "#main",
+			dataSource:"queryAllGoods.action",
+			ajaxData:{
+				condition : con
+			}
+		});
+	});
+
+	
+	
+	$(".hover_gt").each(function(){
+		$(this).parent().mouseenter(function(){
+			$(this).find(".hover_gt").css({
+				opacity:1,
+				top:-55
+			});
+		});
+		
+		$(this).parent().mouseleave(function(){
+			$(this).find(".hover_gt").css({
+				opacity:0,
+				top:-9
+			});
+		});
+	});
+	
+	
+	$(window).scroll(function(){
+	
+		 var sTop = $(window).scrollTop();  
+         var sTop = parseInt(sTop); 
+         if(sTop>600){
+        	 $("#scrollSearch").removeClass("hidden");
+        	 $("#toTop").removeClass("hidden");
+        	 
+        	
+         }else{
+        	 $("#scrollSearch").addClass("hidden");
+        	 $("#toTop").addClass("hidden");
+         }
+	});
+	
+	 $("#toTop").click(function(){
+		 $("html,body").animate({
+			 scrollTop : 0 
+		 },500);
+	 });
+	 
+	
+	
+});

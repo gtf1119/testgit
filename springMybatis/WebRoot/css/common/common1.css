@@ -1,0 +1,63 @@
+*{
+	font-family:"Microsoft YaHei";
+}
+
+body,html{
+	
+}
+
+body{
+	margin:0;
+
+	color:#333;
+}
+
+.hidden{
+	display:none;
+}
+
+input[type='text'],input[type='password'],input[type='button'],input[type='submit'],input[type='reset']{
+	border:2px solid #e6e6e6;
+	outline:none;
+	padding:5px 10px;
+	border-radius:3px;
+	user-select:none;
+	box-sizing:border-box;
+}
+
+input[type='text']:hover,input[type='password']:hover{
+	border:2px solid #848080;
+}
+
+input[type='text']:focus,input[type='password']:focus {
+	border:2px solid #4fc6fb;
+}
+
+input[type='button'],input[type='submit'],input[type='reset']{
+	color:white;
+	background:#4fc6fb;
+    padding: 6px 15px;
+    cursor:pointer;
+    border:1px solid #2d9fd2;
+}
+
+input[type='button']:active,input[type='submit']:active,input[type='reset']:active{
+    background: #03A9F4;
+}
+
+.btnDisable {
+	background-color: #cacaca !important;
+	border: 2px solid #a7a7a7 !important;
+}
+
+.txtErr{
+	border:2px solid red !important;
+}
+
+
+.forbidBtn{
+    color: #9a9999 !important;
+    background: #e0e2e2 !important;
+    padding: 6px 15px;
+    border: 1px solid #808284 !important;
+}

@@ -1,0 +1,94 @@
+var addfriend = {
+	init : function(args) {
+		if (args.ajaxData == null) {
+			args.ajaxData = {
+				pageNum : 1,
+				pageSize : 10
+			};
+		} else {
+			if (args.ajaxData.pageNum == null) {
+				args.ajaxData.pageNum = 1;
+			}
+			if (args.ajaxData.pageSize == null) {
+				args.ajaxData.pageSize = 10;
+			}
+		}
+		$(args.rendTo).data("args", args);
+		addfriend.getDataSource(args);
+	},
+	reload : function(rendTo, pageNum, pageSize) {
+		var args = $(rendTo).data("args");
+		args.ajaxData.pageNum = pageNum;
+		args.ajaxData.pageSize = pageSize;
+		addfriend.build(args);
+	},
+	getDataSource : function(args) {
+		if (typeof args.dataSource == "string") {
+			$.ajax({
+				url : args.dataSource,
+				type : "POST",
+				dataType : "text",
+				data : args.ajaxData,
+				success : function(json) {
+					var obj = eval("(" + json + ")");
+					args.data = obj;
+					addfriend.build(args);
+				}
+			});
+		} else {
+			args.data = args.dataSource;
+			addfriend.build(args);
+		}
+	},
+	build : function(args) {
+		var renderTo = $(args.renderTo);
+		$(args.data.rows).each(function(i, t) {
+			var buscard = $("<div class='bbuscard'></div>").appendTo(renderTo);
+			var tx = $("<div class='txx'></div>").appendTo(buscard);
+			var txpic = $("<img class='txpicc' src='upload/" + t.userimg + "'>").appendTo(tx);
+			var wm = $("<div class='wm' >" + t.loginname + "</div>").appendTo(buscard);
+			var sex = $("<div class='sex'>" + t.sex + "</div>").appendTo(buscard);
+			if (t.autograph == null) {
+				var autograph = $("<div class='autograph'>这家伙很懒，还没有签名</div>").appendTo(buscard);
+			} else {
+				var autograph = $("<div class='autograph'>" + t.autograph + "</div>").appendTo(buscard);
+			}
+			var jhy = $("<div class='jhy hidden'>+加好友</div>").appendTo(buscard);
+			var xq = $("<div class='xq hidden'>详情</div>").appendTo(buscard);
+
+			var xingq = $("<div class='xingq hidden'></div>").appendTo(renderTo);
+			var titl = $("<div class='titl'>用户详情</div>").appendTo(xingq);
+			var guanbi = $("<div class='guanbi'>×</div>").appendTo(xingq);
+			var xqtx = $("<div class='xqtx'></div>").appendTo(xingq);
+			var xqpic = $("<img class='xqpic' src='ima'>upload/" + t.userimg + "</img>").appendTo(xqtx);
+			var xm = $("<div class='xm'>姓名：<</div>").appendTo(xingq);
+			var sp = $("span>" + t.loginname + "</span>").appendTo(xm);
+			var xb = $("<div class='xb'>性别：</div>").appendTo(xingq);
+			var spp = $("<span>" + t.sex + "</span>").appendTo();
+			var gq = $("<div class='gq'>个签：</div>").appendTo(xingq);
+			if (t.autograph == null) {
+				var sqq = $("<span>这家伙很懒，还没有签名</span>").appendTo(gq);
+			} else {
+				var sqq = $("<span>" + t.autograph + "</span>").appendTo(gq);
+			}
+			var xqjhq = $("<div class='xqjhq'>加为好友</div>").appendTo(xingq);
+		});
+		addfriend.event(args);
+	},
+	event : function(args) {
+		$(".xq").click(function() {
+			$(".xingq").removeClass("hidden");
+		});
+		$(".guanbi").click(function() {
+			$(".xingq").addClass("hidden");
+		});
+		$(".bbuscard").mouseenter(function() {
+			$(".jhy").removeClass("hidden");
+			$(".xq").removeClass("hidden");
+		});
+		$(".bbuscard").mouseleave(function() {
+			$(".jhy").addClass("hidden");
+			$(".xq").addClass("hidden");
+		});
+	}
+};

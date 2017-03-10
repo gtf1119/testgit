@@ -1,0 +1,101 @@
+* {
+	font-family: 'Microsoft YaHei';
+}
+
+#grid {
+    table-layout: fixed;
+}
+
+.grid {
+	width:100%;
+	border-left: 1px solid #e0e0e0;
+	border-top: 2px solid #148ffd;
+}
+
+.grid>thead>th{
+	background-color: #f6fbff;
+	color: #333;
+}
+
+/**
+.gridTR:hover{
+	background-color: #f3f3f3;
+}
+**/
+
+.gridTRhover{
+	background-color: #f3f3f3;
+}
+
+.gridTrSelected{
+	background:#d8eafb;
+	
+}
+
+.grdiTD {
+	border-right: 1px solid #e0e0e0;
+	border-bottom: 1px solid #e0e0e0;
+	padding: 5px 10px;
+  	padding: 5px 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+   
+}
+
+.alignright{
+	text-align:right;	
+}
+
+.aligncenter{
+	text-align:center;
+}
+
+/*分页栏*/
+
+.page{
+	border:1px solid #e0e0e0;
+	border-top-width: 0;
+	background-color: #f2f8fc;
+	color: #464646;
+	padding:6px;
+}
+
+.pageTable{
+	width:100%;
+	font-size:14px;
+}
+
+.page .sltSize{
+	width:70px;
+}
+
+.page .select{
+	border:1px solid #a9a8a8;
+}
+
+.page .selList{
+	border: 1px solid #a9a8a8;
+	left:-1px;
+    border-radius: 3px;
+}
+
+.page .txtShow{
+	padding: 1px 25px 1px 10px;
+}
+
+.pageBtn{
+	border: 1px solid #eff8ff;
+    text-align: center;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin: 0 5px;
+    user-select:none;
+}
+
+.pageBtn:hover{
+	background:#add6f1;
+	border-radius: 3px;
+	color:white;
+}
+

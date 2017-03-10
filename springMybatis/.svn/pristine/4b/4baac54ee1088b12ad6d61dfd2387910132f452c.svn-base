@@ -1,0 +1,117 @@
+function xdialog(args){
+	this.rendTo = args.rendTo;
+	this.init();
+}
+
+xdialog.prototype.init = function(){
+	if(!this.rendTo){
+		return;
+	}
+	this.objRendTo = $(this.rendTo);
+	this.build();
+};
+
+xdialog.prototype.build = function(){
+	this.objRendTo.removeClass().addClass("xdialog xdialogHidden hidden");
+	var html = "<div class='xdialogContent'><div class='close'>╳</div>";
+	html += "<div class='xdialogTitle'></div>";
+	
+	if(this.confirm){
+		
+	}else{
+		html += "<iframe class='xdialogIframe' src='' frameborder='0'></iframe>";
+	}
+	html += "</div>";
+	this.objRendTo.html(html);
+	
+	if(!this.objRendTo.next().hasClass("xdialogMask")){
+		$("<div class='xdialogMask hidden'></div>").insertAfter(this.objRendTo);
+	}
+	this.eventBind();
+};
+
+xdialog.prototype.eventBind = function(){
+	
+};
+
+xdialog.prototype.show = function(args){
+	$(".xdialogIframe",this.objRendTo).attr("src",args.url);
+	var h = $(window).height();
+	var dialogTop = h/2 - args.height/2;
+	$(this.objRendTo).css("top",dialogTop);
+	$(".xdialogContent",this.objRendTo).css("width",args.width);
+	$(".xdialogIframe",this.objRendTo).css("height",args.height);
+	
+	$(".xdialogTitle",this.objRendTo).text(args.title);
+	this.objRendTo.removeClass("hidden");
+	
+	
+	if(util.isLTIE10()){
+		$(this.objRendTo).height(0).css("top",h/2).removeClass("hidden xdialogHidden");
+		$(this.objRendTo).animate({
+			height : args.height,
+			top : dialogTop
+		});
+		$(".xdialogMask").removeClass("hidden");
+		$(".xdialogMask").css("opacity",0);
+		$(".xdialogMask").animate({
+			opacity : 0.2
+		},"slow");
+	}else{
+		//this.objRendTo.css("transition","all 250ms");
+		var t= this.objRendTo;
+		setTimeout(function(){
+			t.removeClass("xdialogHidden");
+		},0);
+//		setTimeout(function(){
+//			t.css("transition","all 0ms");
+//		},250);
+		
+		
+		$(".xdialogMask").removeClass("hidden");
+		$(".xdialogMask").css("opacity",0);
+		$(".xdialogMask").css("transition","all 250ms");
+		
+		setTimeout(function(){
+			$(".xdialogMask").css("opacity",0.2);
+		},0);
+//		setTimeout(function(){
+//			$(".xdialogMask").css("transition","all 0ms");
+//		},250);
+		
+	}
+
+
+};
+
+xdialog.prototype.hide = function(args){
+	if(util.isLTIE10()){
+		var h = $(window).height();
+		this.objRendTo.animate({
+			height:0,
+			top : h/2
+		});
+		
+		$(".xdialogMask").animate({
+			opacity : 0
+		},"slow");
+		setTimeout(function(){
+			$(".xdialogMask").addClass("hidden");
+		},250);
+	}else{
+		var t= this.objRendTo;
+		setTimeout(function(){
+			t.addClass("xdialogHidden");
+		},0);
+		
+		$(".xdialogMask").css("transition","all 250ms");
+		setTimeout(function(){
+			$(".xdialogMask").css("opacity", 0);
+		},0);
+		setTimeout(function(){
+			$(".xdialogMask").addClass("hidden");
+		},250);
+		this.objRendTo.addClass("hidden");
+	}
+
+};

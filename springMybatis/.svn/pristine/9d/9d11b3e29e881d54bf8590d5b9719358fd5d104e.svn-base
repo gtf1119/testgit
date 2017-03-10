@@ -1,0 +1,340 @@
+var buildOrder = {
+	init : function(args){
+		if(args.ajaxData == null){
+			args.ajaxData = {
+					pageNum : 1,
+					pageSize : 10
+			};
+		}else{
+			if(args.ajaxData.pageNum == null){
+				args.ajaxData.pageNum = 1;
+			}
+			if(args.ajaxData.pageSize == null){
+				args.ajaxData.pageSize = 10;
+			}
+		}
+		$(args.rendTo).data("args",args);
+		buildOrder.getDataSource(args);
+	},
+	reload : function(rendTo,pageNum, pageSize){
+		var args = $(rendTo).data("args");
+		args.ajaxData.pageNum = pageNum;
+		args.ajaxData.pageSize = pageSize;
+		buildOrder.init(args);
+	},
+	getDataSource : function(args){
+		if(typeof args.dataSource == "string"){
+			$.ajax({
+				url : args.dataSource,
+				type : "POST",
+				dataType : "text",
+				data : args.ajaxData,
+				success : function(json){
+					var obj = eval("("+json+")");
+					args.data = obj;
+					buildOrder.build(args);
+				}
+			});
+		}else{
+			args.data = args.dataSource;
+			buildOrder.build(args);
+		}
+	},
+	build : function(args){
+		var rendTo = $(args.rendTo);
+		$(rendTo).html("");
+		$(args.data.rows).each(function(i,r){
+			var orderContainer = $("<div class='orderContainer'></div>").appendTo(rendTo);
+			
+			var actionBar = $("<div class='actionBar'></div>").appendTo(orderContainer);
+			var orderGoodsList = $("<div class='orderGoodsList'></div>").appendTo(orderContainer);
+		
+			$("<div class='bar orderBar'>订单编号:<span class='orderid'>"+r.id+"</span></div>").appendTo(actionBar);
+			$("<div class='bar priceBar'>价格</div>").appendTo(actionBar);
+			$("<div class='bar beginBar'>起始时间</div>").appendTo(actionBar);
+			$("<div class='bar endBar'>结束时间</div>").appendTo(actionBar);
+			$("<div class='bar statusBar'>状态</div>").appendTo(actionBar);
+			$("<div class='bar handleBar'>操作</div>").appendTo(actionBar);
+			
+			var ordertable = $("<table  class='ordertable' border='0' cellpadding='0' cellspacing='0'></table>").appendTo(orderGoodsList);
+			var tr;
+			var trArr = [];
+			$(r.ordergoods).each(function(i,o){
+				tr = $("<tr></tr>").appendTo(ordertable);
+				var goodsinfo = $("<td class='goodsinfo'></td>").appendTo(tr);
+				$("<div class='imgCon'><img src='upload/"+o.goods.goodsImgList[0].filename+"' alt='' /></div>").appendTo(goodsinfo);
+				$("<div class='goodsname' goodsId='"+o.goods.goodsId+"' title='"+o.goods.goodsName+"'>"+o.goods.goodsName+"</div>").appendTo(goodsinfo);
+				$("<div class='goodsnum'>x<span class='postnum'>"+o.goodsnum+"</span></div>").appendTo(goodsinfo);
+				$("<div class='seller' sellerId='"+o.seller.id+"'>卖家："+o.seller.name+"</div>").appendTo(goodsinfo);
+				trArr.push(tr);
+				
+			});
+			$("<td class='goodsprice' rowspan='"+r.ordergoods.length+"'>￥<span class='postprice'>"+r.paymoney+"</span></td>").appendTo(trArr[0]);
+			$("<td class='starttime' rowspan='"+r.ordergoods.length+"'>"+r.begintime+"</td>").appendTo(trArr[0]);
+			if(r.endtime == null){
+				r.endtime = "交易未完成";
+			}
+			$("<td class='endtime' rowspan='"+r.ordergoods.length+"'>"+r.endtime+"</td>").appendTo(trArr[0]);
+			var content;
+			if(r.status == "0"){
+				content = "未付款";
+			}
+			if(r.status == "1"){
+				content = "已付款";
+			}
+			if(r.status == "2"){
+				content = "已签收";
+				
+			}
+			if(r.status == "3"){
+				content = "已评价";
+			}
+			$("<td status='"+r.status+"' class='status' rowspan='"+r.ordergoods.length+"'><div class='statustype'>"+content+"</div></td>").appendTo(trArr[0]);
+			$("<td class='handlemodule' rowspan='"+r.ordergoods.length+"'><input class='btnTake' type='button' value='确认收货'/></td>").appendTo(trArr[0]);
+			
+		});
+		
+		$("<div style='clear:both'><div>").appendTo(args.rendTo);
+		var html = "";
+		
+		var page = $("<div class='page'></div>").appendTo(args.rendTo);
+		var pageTable = $("<table class='pageTable' cellpadding='0' cellspacing='0'>").appendTo(
+				page);
+		var pageTr = $("<tr></tr>").appendTo(pageTable);
+		var html = "";
+		html += "<td style='width: 140px;'>共<span class='total'>"+args.data.total+"</span>项,每页显示</td>";
+		html += "<td style='width: 80px;'><div class='sltSize'></div></td>";
+		html += "<td style='padding:0 18px'>项</td>";
+		html += "<td style='width: 80px;'><div class='btnPrev pageBtn'>上一页</div></td>";
+		html += "<td style='width: 40px;'><span class='currentPage'>"+args.ajaxData.pageNum+"</span>/" +
+				"<span class='totalPage'>"+Math.ceil(args.data.total/args.ajaxData.pageSize)+"</span></td>";
+		html += "<td style='width: 80px;'><div class='btnNext pageBtn'>下一页</div></td>";
+
+		$(pageTr).html(html);
+		
+		buildOrder.eventBind(args);
+		
+	},
+	eventBind : function(args){
+		var rendTo = $(args.rendTo);
+		select.init({
+			rendTo : args.rendTo + " .sltSize",
+			dataSource : [{
+				key:"10",
+				value:"10"
+			},{
+				key:"20",
+				value:"20"
+			},{
+				key:"30",
+				value:"30"
+			},{
+				key:"40",
+				value:"40"
+			},{
+				key:"50",
+				value:"50"
+			}],
+			defaultSelected : args.ajaxData.pageSize,
+			offset:"-2",
+			direction:"up",
+			onclick : function(){
+				
+				buildOrder.reload(rendTo, 1, $(".page .defaultSelected",rendTo).attr("key"));
+			}
+		});
+		
+		$("tr",rendTo).each(function(){
+			var status = $(this).find(".status").attr("status");
+			if(status == "3"){
+//				$("<a class='delOrder' href=''>删除</a>").appendTo(".handlemodule",$(this));
+				$(this).find(".handlemodule").html("<input class='btnHasCom' type='button' value='已评论'/><a class='delOrder' href='javascript:void(0);'>删除</a>");
+				$(this).find(".statustype").addClass("hasComment");
+			}
+			if(status == "2"){
+				
+				$(this).find(".handlemodule").html("<input class='btnComment' type='button' value='评论'/><a class='delOrder' href='javascript:void(0);'>删除</a>");
+				$(this).find(".statustype").addClass("receiveclick");
+			}
+			if(status == "1"){
+				$(this).find(".statustype").addClass("haspayclick");
+			}
+			if(status == "0"){
+				$(this).find(".handlemodule").html("<input class='btnPay' type='button' value='点击付款'/>");
+				$(this).find(".statustype").addClass("payclick");
+			}
+		});
+		
+		
+		$(".btnPrev", rendTo).click(function() {
+			var currentPage = +$(".currentPage", rendTo).text();
+			currentPage = (currentPage - 1) < 1 ? 1 : currentPage - 1;
+			$(".currentPage", rendTo).text(currentPage);
+			buildOrder.reload(rendTo, currentPage, $(".page .defaultSelected",rendTo).attr("key"));
+		});
+
+		$(".btnNext", rendTo).click(function() {
+			var currentPage = +$(".currentPage", rendTo).text();
+			var maxPage = +$(".totalPage", rendTo).text();
+			currentPage = (currentPage + 1) > maxPage ? maxPage : currentPage + 1;
+			$(".currentPage", rendTo).text(currentPage);
+			buildOrder.reload(rendTo, currentPage, $(".page .defaultSelected",rendTo).attr("key"));
+		});
+		
+		
+		
+		//支付功能
+		$(".btnPay").click(function(){
+			var parent = $(this).parents(".orderContainer");
+			var orderid = $(parent).find(".orderid").text();
+			var payMoney = $(".postprice",$(parent)).text();
+			
+			
+			
+			var infoArr = [];
+			var infoStr;
+			$("tr",$(parent)).each(function(){
+				var goodsId = $(".goodsname",$(this)).attr("goodsId");
+				var sellerId = $(".seller",$(this)).attr("sellerId");
+				var num = $(".postnum",$(this)).text();
+				infoStr = goodsId+"|"+sellerId+"|"+num;
+				infoArr.push(infoStr);
+			});
+				var postInfo = infoArr.join(",");
+				
+			
+			dialog.show({
+				title:"确认付款",
+				confirm:true,
+				text:"是否选择付款，您可以点击确认或取消",
+				width:400,
+				height:220,
+				onClickYes:function(){
+					$.post("updateMoney.action",{
+						postInfo : postInfo,
+						payMoney : payMoney
+					},function(json){
+						if(json.isSuccess == "true"){
+							
+							
+							$.post("updateStatus.action",{
+								orderid : orderid,
+								status : "1"
+							},function(json){
+								if(json.isSuccess == "true"){
+									
+									buildOrder.reload(rendTo, 1, $(".page .defaultSelected",rendTo).attr("key"));
+									top.dialog.hide();
+								}else{
+									alert("no");
+								}
+							});
+							
+						}else{
+							if(json.info != null){
+								top.dialog.hide();
+								alert(json.info);
+							}else{
+								alert("失败");
+							}
+							
+						}
+					});
+				}
+			});
+		});
+		
+		
+		//收货功能
+		$(".btnTake").click(function(){
+			var parent = $(this).parents(".orderContainer");
+			var orderid = $(parent).find(".orderid").text();
+			
+			top.dialog.show({
+				title:"确认收货",
+				confirm:true,
+				text:"是否确认收货，您可以点击确认或取消",
+				width:400,
+				height:220,
+				onClickYes : function(){
+					$.post("updateStatus.action",{
+						orderid:orderid,
+						status : "2"
+					},function(json){
+						if(json.isSuccess == "true"){
+							top.dialog.hide();
+							buildOrder.reload(rendTo, 1, $(".page .defaultSelected",rendTo).attr("key"));
+						}else{
+							alert("失败");
+						}
+					});
+				}
+			});
+		});
+		
+		//充值功能
+		$("#top-up").click(function(){
+			top.dialog.show({
+				title:"充值",
+				confirm:true,
+				text:"",
+				htmlArgument:"<span>充值金额：<span><input type='text' class='topUpMoney'></input>",
+				width:400,
+				height:220,
+				onClickYes : function(){
+					var topUpMoney = $(".topUpMoney").val();
+					if(topUpMoney == null){
+						topUpMoney = 0;
+					}
+					$.post("topUpMoney.action",{
+						topUpMoney : topUpMoney
+					},function(json){
+						if(json.isSuccess == "true"){
+							top.dialog.hide();
+						}else{
+							alert("充值失败");
+						}
+					});
+				}
+			});
+		});
+		
+		
+		//评论功能
+		$(".btnComment").click(function(){
+			var parent = $(this).parents(".orderContainer");
+			var orderid = $(".orderid",$(parent)).text();
+			location.href=$("base").attr("href")+"/html/taobao/evaluation.jsp?orderid="+orderid;
+		});
+		
+		
+		//删除订单功能
+		$(".delOrder").click(function(){
+			var parent = $(this).parents(".orderContainer");
+			var orderid = $(".orderid",$(parent)).text();
+			
+			top.dialog.show({
+				title:"删除订单",
+				confirm:true,
+				text:"是否确认删除，您可以点击确认或取消",
+				width:400,
+				height:220,
+				onClickYes : function(){
+					$.post("delOrder.action",{
+						orderid : orderid
+					},function(json){
+						if(json.isSuccess == "true"){
+							top.dialog.hide();
+							buildOrder.reload(rendTo, 1, $(".page .defaultSelected",rendTo).attr("key"));
+						}else{
+							alert("失败");
+						}
+					});
+				}
+			});
+			
+		});
+		
+	}
+
+};

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ggg.mapper.FriendMapper">
+	<resultMap type="Friend" id="Friend">
+		<id property="id" column="CHATID" />
+		<result property="myId" column="MYID" />
+		<result property="friendId" column="FRIENDID" />
+		<association property="user" javaType="User">
+			<id property="id" column="USERID" />
+			<result property="name" column="USERNAME" />
+			<result property="sex" column="SEX" />
+			<result property="userimg" column="USERIMG" />
+		</association>
+	</resultMap>
+	<insert id="add" parameterType="Friend">
+		<selectKey keyProperty="id" order="BEFORE" resultType="String">
+			SELECT SYS_GUID() FROM DUAL
+		</selectKey>
+		INSERT INTO FRIEND(ID,MYID,FRIENDID)VALUES(#{id},#{myId},#{friendId});
+	</insert>
+	<select id="queryFriendById" resultMap="Friend" parameterType="String">
+		SELECT F.MYID,F.FRIENDID,U.LOGINNAME AS USERLOGINNAME,U.NAME AS
+		USERNAME,U.SEX,U.USERIMG AS USERIMG ,U.AUTOGRAPH AS USERAUTOGRAPH
+		FROM FRIEND F LEFT JOIN T_USER U ON F.FRIENDID = U.ID WHERE
+		F.MYID=${value};
+	</select>
+</mapper>

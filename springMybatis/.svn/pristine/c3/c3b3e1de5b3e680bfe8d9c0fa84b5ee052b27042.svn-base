@@ -1,0 +1,48 @@
+.userCard{
+    border: 1px solid #a4dafd;
+    border-radius:3px;
+    position: relative;
+    padding: 20px 0 150px 37px;
+    overflow: hidden;
+    width: 415px;
+    height: 48px;
+    background: url(../image/bg.jpg) no-repeat;
+    background-size:471px 220px;
+    color: black;
+    float:left;
+    margin:10px;
+}
+
+.pic{
+    width: 120px;
+    height: 120px;
+    float: left;
+   	overflow:hidden;
+    border-radius: 50%;
+ 	border:1px solid #469fda;
+}
+
+.image{
+    width: 100%;
+    height: 100%;
+}
+
+.messageContainer{
+ 
+    float: left;
+    padding: 0 0 0 40px;
+}
+
+.msgTD{
+	color:black;
+    font-size: 15px;
+    padding: 5px 5px 0 27px;
+}
+
+.message,.baseMsg{
+    padding: 0 0 10px 0;
+}
+.msg{
+	display:inline;
+}
+

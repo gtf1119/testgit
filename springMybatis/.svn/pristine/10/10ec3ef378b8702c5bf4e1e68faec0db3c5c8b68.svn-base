@@ -1,0 +1,36 @@
+.tabCon{
+  	width:500px;
+ 	overflow:hidden;
+    margin: 0 auto;
+
+	
+}
+
+.tab{
+
+	float:left;
+	background:#f3f3f3;
+    padding: 10px 0px;
+   
+    text-align:center;
+    user-select:none;
+	border-left:none;
+	cursor:pointer;
+}
+
+
+
+.tab:hover {
+	background:#d4d4d4;
+}
+
+.tabSelected{
+	background:#a1abaf;
+	color:white;
+}
+
+#ifra{
+	width:100%;
+	height:100%;
+	margin-top:10px;
+}

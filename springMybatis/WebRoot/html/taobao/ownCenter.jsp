@@ -1,0 +1,278 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ include file="../common/privateToHome.jsp"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<base href="<%=basePath%>">
+
+<title>欢迎光临</title>
+<meta name="viewport"
+	content="width=device-width,minimum-scale=1.0,maximum-scale=1.0" />
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="This is my page">
+<!--
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	-->
+
+<link rel="stylesheet" href="css/font-awesome.min.css" type="text/css"></link>
+<link rel="stylesheet" href="css/taobao/ownCenter.css" type="text/css"></link>
+
+<link rel="stylesheet" href="css/taobao/taobao.css" type="text/css"></link>
+<link rel="stylesheet" href="css/common/dialog.css" type="text/css"></link>
+<link rel="stylesheet" href="css/taobao/home.css" type="text/css"></link>
+<link rel="stylesheet" href="css/common/common1.css" type="text/css"></link>
+<script type="text/javascript" src="js/jquery-1.8.3.js"></script>
+
+
+<script type="text/javascript" src="js/common/util.js"></script>
+
+<script type="text/javascript" src="js/taobao/shopCartNum.js"></script>
+<script type="text/javascript" src="js/taobao/common/exit.js"></script>
+<script type="text/javascript" src="js/taobao/ownCenter.js"></script>
+<script type="text/javascript" src="js/common/xidalog.js"></script>
+</head>
+<body>
+	<div id="container">
+		<div id="top_nav">
+			<div id="navbg">
+				<p id="loginInfo">
+					<a href="<%=basePath%>/html/taobao/home.jsp">嗨，欢迎光临 </a>
+					<c:choose>
+						<c:when test="${user!=null}">
+							<a id="login" class="a_link" href="javascript:void(0);"><%=userName%></a>
+							<div class="userid hidden"><%=userId%></div>
+						</c:when>
+						<c:when test="${user == null}">
+							<a id="login" class="a_link"
+								href="<%=basePath%>/html/loginShop.jsp">请登录</a>
+						</c:when>
+					</c:choose>
+
+
+
+					<a id="regist" class="a_link"
+						href="<%=basePath%>/html/loginShop.jsp">免费注册</a> <a
+						href="javascript:void(0);" id="exit">退出</a>
+				</p>
+				<ul id="navListInfo">
+					<li><a href="">我的信息</a></li>
+
+					
+					<li><a href="<%=basePath%>/html/taobao/shopCart.jsp">购物车<span
+							class="cartNum"></span> </a></li>
+					<li><a href="<%=basePath%>/html/taobao/order.jsp">我的订单</a>
+				</ul>
+			</div>
+		</div>
+
+
+		<div id="content">
+			<div class="ownInfo">
+				<div class="bgImg"></div>
+				<div class="infoBar">
+					<div class="infoMain">
+						<div class="userImgIcon"></div>
+						<div class="userImgMask hidden">
+
+							<form action="upload.action" target="hidden_iframe"
+								enctype="multipart/form-data" method="post">
+								<input type="file" name="file" class="uploadfile" />
+							</form>
+							<iframe class="hidden" id="hidden_iframe" name="hidden_iframe"></iframe>
+							<span>修改我的头像</span>
+						</div>
+						<div class="infoContent ic_1">
+							<div class="infoTop">
+								<h1>
+									<span class="infoName"></span>
+
+								</h1>
+							</div>
+							<div class="line">
+								<span class="infoSex infospan"></span> <span
+									class="infoLoginName infospan"></span>
+							</div>
+							<div class="line">
+								<span class="infospan">
+									<i class="fa fa-jpy" aria-hidden="true"></i>
+									
+								</span>
+									
+								 <span class="infoMoney infospan">未登录</span>
+								 
+							</div>
+							
+							<div class="line">
+								 <div class="infoAutoGraph infospan">功夫不好不要大力日比sdfsdfdfdfdfddf</div>
+							</div>
+
+							<div class="infoBot">
+
+								<input type="button" value="修改个人资料" id="btnEdit" />
+							</div>
+						</div>
+						<div class="infoContent ic_2 hidden">
+							<span class="returnTo">返回我的主页</span>
+							<div class="infoTop">
+								<h1>
+									<span class="infoName"></span>
+
+								</h1>
+							</div>
+							<div class="fields">
+								<div class="fieldItem">
+									<h3 class="field_title">昵称</h3>
+									<div class="field_content">
+										<span class="nametxt">未知</span> <i
+											class="fa fa-pencil edit hidden" aria-hidden="true">修改</i>
+
+
+									</div>
+									<div class="editContent hidden">
+										<div class="txtDiv">
+											<input type="text" class="txtEdit txtLoginName" />
+										</div>
+										<div class="btnDiv">
+											<input type="button" value="保存" class="btnSave" /> <input
+												type="button" value="取消" class="btnCancel" />
+										</div>
+
+									</div>
+								</div>
+								<div class="fieldItem">
+									<h3 class="field_title">性别</h3>
+									<div class="field_content">
+										<span class="sextxt">未知</span> <i
+											class="fa fa-pencil edit hidden sexedit" aria-hidden="true">修改</i>
+									</div>
+									<div class="editContent hidden">
+										<div class="txtDiv">
+											<label id="lblSex1" class="lbl"> <input type="radio"
+												name="sex" id="sex1" value="男" />男 </label> <label id="lblSex2"
+												class="lbl"> <input type="radio" name="sex"
+												id="sex2" value="女" />女 </label>
+
+										</div>
+										<div class="btnDiv">
+											<input type="button" value="保存" class="btnSave" /> <input
+												type="button" value="取消" class="btnCancel" />
+										</div>
+
+									</div>
+								</div>
+								
+								<div class="fieldItem">
+									<h3 class="field_title">密码</h3>
+									<div class="field_content">
+										<span class="pwdtxt">未知</span> <i
+											class="fa fa-pencil edit hidden" aria-hidden="true">修改</i>
+
+
+									</div>
+									<div class="editContent hidden">
+										<div class="txtDiv">
+											<input type="text" class="txtEdit txtPwd" />
+										</div>
+										<div class="btnDiv">
+											<input type="button" value="保存" class="btnSave" /> <input
+												type="button" value="取消" class="btnCancel" />
+										</div>
+
+									</div>
+								</div>
+								
+								<div class="fieldItem">
+									<h3 class="field_title">个性签名</h3>
+									<div class="field_content">
+										<span class="autoGraphtxt">未知</span> <i
+											class="fa fa-pencil edit hidden" aria-hidden="true">修改</i>
+
+
+									</div>
+									<div class="editContent hidden">
+										<div class="txtDiv">
+											<input type="text" class="txtEdit txtAutoGraph" />
+										</div>
+										<div class="btnDiv">
+											<input type="button" value="保存" class="btnSave" /> <input
+												type="button" value="取消" class="btnCancel" />
+										</div>
+
+									</div>
+								</div>
+
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div id="tabID">
+				<div class="allCon">
+					<div class="tab">商城系统</div>
+					<div class="tabItemCon shop hidden">
+						<div class="tabItem" url="home.jsp">首页</div>
+						<div class="tabItem" url="order.jsp">我的订单</div>
+						<div class="tabItem" url="shopcart.jsp">购物车</div>
+
+					</div>
+				</div>
+				<div class="allCon">
+					<div class="tab chat">聊天系统</div>
+					<div class="tabItemCon chatItem hidden">
+						<div class="tabItem" url="chatroom.jsp">群聊</div>
+						<div class="tabItem">添加好友</div>
+						<div class="tabItem">好友列表</div>
+
+					</div>
+				</div>
+				<div class="allCon">
+					<div class="tab disk" url="NetWork.jsp">网盘系统</div>
+
+				</div>
+				<div class="allCon asys">
+					<div class="tab">图表分析</div>
+					<div class="tabItemCon hidden">
+						<div class="tabItem hot">热销</div>
+						<div class="tabItem bill">本月清单</div>
+
+					</div>
+				</div>
+
+
+
+
+				<div class="moveBar"></div>
+
+				<iframe class="hidden" src="" frameborder="0" id="ifra"></iframe>
+			</div>
+
+
+
+		</div>
+
+
+		<div id="footer"></div>
+		<div id="toTop" class="hidden">
+			<i class="iconfont totop">&#xe663;</i>
+			<div class="topdiv">顶部</div>
+		</div>
+	</div>
+
+
+
+	<div id="xdialog">
+		
+	</div>
+	
+
+</body>
+</html>

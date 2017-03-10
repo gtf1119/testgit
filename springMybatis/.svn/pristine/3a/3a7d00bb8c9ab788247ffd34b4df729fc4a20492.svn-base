@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ggg.mapper.GoodsImgMapper">
+	<resultMap type="GoodImg" id="GoodImg">
+		<id property="id" column="ID"/>
+		<result property="filename" column="FILENAME"/>
+		<result property="createtime" column="CRETAETIME"/>
+		<result property="goodsid" column="GOODS_ID"/>
+	</resultMap>
+
+	<insert id="insert" parameterType="GoodImg">
+		INSERT INTO T_IMG(ID,FILENAME,GOODS_ID) VALUES(SYS_GUID(),#{filename},#{goodsid})
+	
+	</insert>
+
+	<delete id="deleteByGoodsId" parameterType="String">
+		DELETE FROM T_IMG WHERE GOODS_ID =#{ID}
+	</delete>
+	
+</mapper>

@@ -1,0 +1,11 @@
+package com.ggg.mapper;
+
+import java.util.List;
+
+import com.ggg.pojo.Friend;
+
+public interface FriendMapper {
+    void add(Friend friend) throws Exception;
+    
+    List<Friend> queryFriendById(String contition) throws Exception;
+}

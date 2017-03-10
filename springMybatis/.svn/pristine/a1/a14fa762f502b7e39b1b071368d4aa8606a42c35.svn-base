@@ -1,0 +1,177 @@
+*{
+	font-family:"Microsoft YaHei";
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+#container{
+	margin:0 auto;
+	width:40%;
+	border:1px solid #b31207;
+	position:relative;
+}
+
+#title {
+	
+	font-size:12px;
+    padding: 5px 0 5px 15px;
+}
+#nav{
+	overflow:hidden;
+	border-bottom:1px solid #0772a2;
+	position:relative;
+	
+}
+.menu{
+    float: left;
+    font-size: 12px;
+    padding: 3px 12px;
+    font-weight: 500;
+    position:relative;
+    z-index:2;
+    user-select:none;
+}
+
+#navBg{
+	width:48px;
+	height:21px;
+	background:rgba(203, 239, 255, 0.55);
+	position:absolute;
+	transition: all 250ms;
+	z-index:1;
+}
+.navBg{
+	background:rgba(203, 239, 255, 0.55);
+}
+
+.camBg{
+	background:white !important;
+}
+
+#content{
+	width:100%;
+	height:80%;
+	border:1px solid #0772a2;
+	border-top-width:0;
+
+}
+
+.menu:hover{
+	
+}
+
+.hide{
+	display:none;
+}
+
+.hidden {
+	position:relative;
+  	font-size: 13px;
+    width: 139px;
+    border-top-width: 0;
+    border: 1px solid #c5c5c5;
+    background: #ececec;
+    box-shadow:3px 3px 2px gray;
+  
+}
+.hidden li{
+	position:relative;
+    padding: 3px 35px;
+    z-index:2;
+   	user-select:none;
+}
+
+.hidden li:hover{
+	background-color: rgb(124, 197, 255);
+}
+
+#file{
+	position: absolute;
+    left: 0px;
+    top: 47px;
+}
+
+#edit{
+	position: absolute;
+    left: 48px;
+    top: 47px;
+}
+
+#format{
+	position: absolute;
+    left: 96px;
+    top: 47px;
+}
+#view{
+	position: absolute;
+    left: 144px;
+    top: 47px;
+}
+
+#help{
+	position: absolute;
+    left: 192px;
+    top: 47px;
+}
+
+hr{
+	width:70%;
+	margin:0 auto;
+	
+}
+
+#titleImg {
+    width: 16px;
+    vertical-align: bottom;
+}
+
+#txtArea{
+	width: 100%;
+	height:100%;
+	border:none;
+}
+
+
+#selBg{
+	width:139px;
+	height:23px;
+	background-color: rgb(124, 197, 255);
+	position:absolute;
+	top:0;
+	z-index:1;
+	transition: all 500ms;
+}
+
+#mask{
+	background:black;
+	width:100%;
+	height:100%;
+	position:absolute;
+	top:0;
+	opacity:0.2;
+	z-index:5;
+}
+
+
+.image{
+    float: left;
+    padding: 1px;
+    width: 16px;
+    border: 1px solid #b3b3b3;;
+    text-align: center;
+    margin-left: 6px;
+}
+
+.image:hover{
+	background:#bbbbc3;
+}
+
+.image:active{
+	background:#a2a2a5;
+}
+
+#smallImg{
+    position: absolute;
+    top: 5px;
+    right: 6px;
+}

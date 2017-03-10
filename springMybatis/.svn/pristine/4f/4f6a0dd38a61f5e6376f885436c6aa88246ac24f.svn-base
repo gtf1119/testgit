@@ -1,0 +1,34 @@
+package com.ggg.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ggg.exception.SysException;
+import com.ggg.mapper.ChatMapper;
+import com.ggg.pojo.Chat;
+import com.ggg.pojo.GridCondition;
+import com.ggg.service.ChatService;
+
+@Service
+public class ChatServiceImpl implements ChatService {
+	
+	@Autowired
+	private ChatMapper chatMapper;
+	
+	public List<Chat> queryAllTxt(String condition) throws Exception {
+		List<Chat> chatList = null;
+		try {
+			chatList = chatMapper.queryAllTxt(condition);
+		} catch (Exception e) {
+			throw new SysException("未查到聊天记录");
+		}	
+		return chatList;
+	}
+
+	public void addMsg(Chat chat) throws Exception {
+		chatMapper.addMsg(chat);
+	}
+
+}

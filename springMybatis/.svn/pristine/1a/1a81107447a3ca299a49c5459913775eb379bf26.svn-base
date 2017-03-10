@@ -1,0 +1,218 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ include file="../common/privateHome.jsp"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<base href="<%=basePath%>">
+
+<title>欢迎光临</title>
+<meta name="viewport"
+	content="width=device-width,minimum-scale=1.0,maximum-scale=1.0" />
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="This is my page">
+<!--
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	-->
+
+<link rel="stylesheet" href="css/icon.css" type="text/css"></link>
+<link rel="stylesheet" href="css/qq.css" type="text/css"></link>
+<link rel="stylesheet" href="css/font-awesome.css" type="text/css"></link>
+<link rel="stylesheet" href="css/font-awesome.min.css" type="text/css"></link>
+<link rel="stylesheet" href="css/homechat.css" type="text/css"></link>
+<link rel="stylesheet" href="css/taobao/auto.css" type="text/css"></link>
+<link rel="stylesheet" href="css/common/grid.css" type="text/css"></link>
+<link rel="stylesheet" href="css/select.css" type="text/css"></link>
+
+<link rel="stylesheet" href="css/taobao/goodsList.css" type="text/css"></link>
+<link rel="stylesheet" href="css/taobao/taobao.css" type="text/css"></link>
+
+<link rel="stylesheet" href="css/slider/slider.css" type="text/css"></link>
+<link rel="stylesheet" href="css/taobao/home.css" type="text/css"></link>
+<link rel="stylesheet" href="css/common/common1.css" type="text/css"></link>
+<script type="text/javascript" src="js/jquery-1.8.3.js"></script>
+<script type="text/javascript" src="js/jquery.qqFace.js"></script>
+<script type="text/javascript" src="js/slider/slider_jq.js"></script>
+<script type="text/javascript" src="js/taobao/home.js"></script>
+<script type="text/javascript" src="js/taobao/goodsList.js"></script>
+<script type="text/javascript" src="js/select.js"></script>
+<script type="text/javascript" src="js/common/util.js"></script>
+<script type="text/javascript" src="js/homechat.js"></script>
+<script type="text/javascript" src="js/taobao/classsifi.js"></script>
+<script type="text/javascript" src="js/common/rgbaster.js"></script>
+<script type="text/javascript" src="js/taobao/shopCartNum.js"></script>
+
+<script type="text/javascript" src="js/taobao/common/exit.js"></script>
+<body>
+	<div id="container">
+		<div id="top_nav">
+			<div id="navbg">
+				<p id="loginInfo">
+					<a href="<%=basePath%>/html/taobao/home.jsp">嗨，欢迎光临 </a>
+					<c:choose>
+						<c:when test="${user!=null}">
+							<a id="login" class="a_link" href="javascript:void(0);"><%=userName%></a>
+							<div class="userid hidden"><%=userId%></div>
+						</c:when>
+						<c:when test="${user == null}">
+							<a id="login" class="a_link" href="<%=basePath%>/html/login.jsp">请登录</a>
+						</c:when>
+					</c:choose>
+
+
+
+					<a id="regist" class="a_link"
+						href="<%=basePath%>/html/loginShop.jsp">免费注册</a> <a
+						href="javascript:void(0);" id="exit">退出</a>
+				</p>
+				<ul id="navListInfo">
+					<li><a href="<%=basePath%>/html/taobao/ownCenter.jsp">我的信息</a>
+					</li>
+
+					<li><a href="<%=basePath%>/html/taobao/shopCart.jsp">购物车<span
+							class="cartNum"></span> </a>
+					</li>
+					<li><a href="<%=basePath%>/html/taobao/order.jsp">我的订单</a>
+				</ul>
+			</div>
+		</div>
+
+		<div id="searchNav">
+
+			<div id="searchCon">
+
+
+				<div id="searchDiv">
+					<input id="txtSearch" type="text" /><input type="button"
+						value="搜索" id="btnSearch">
+				</div>
+			</div>
+
+			<div id="scrollSearch" class="hidden">
+
+				<div id="searchDivHidden">
+					<input id="txtSearchHidden" type="text" /><input type="button"
+						value="搜索" id="btnSearchHidden">
+				</div>
+			</div>
+
+		</div>
+
+		<div id="content" class="content_bg">
+
+
+
+
+
+			<div id="slidCon">
+
+				<div class="sliderCon">
+					<div class="slider">
+						<ul class="sliderUl">
+							<li class="picLi"><a
+								href="https://alimarket.tmall.com/markets/alimama/mingdian?ali_trackid=19_0d817aac96532fd8bcb274f349f22959&spm=875.7931836/A.2016006.d4.KI9Zhd"><img
+									class="slidImg" index='1' class="pic"
+									src="//img.alicdn.com/tps/TB1x2eZLVXXXXbCXVXXXXXXXXXX-1130-500.jpg"
+									alt="" /> </a></li>
+							<li class="picLi"><a
+								href="https://www.tmall.com/wow/brand/act/fashion?acm=lb-zebra-2386-265936.1003.4.410386&scm=1003.4.lb-zebra-2386-265936.OTHER_1_410386&ali_trackid=19_921c16a74e7fcc1cefd30e011f187d56&spm=875.7931836/A.2016006.d2.KI9Zhd"><img
+									class="slidImg" index='2' class="pic"
+									src="//img.alicdn.com/tps/TB1uUK_LVXXXXcXXpXXXXXXXXXX-1130-500.jpg"
+									alt="" /> </a></li>
+							<li class="picLi"><a
+								href="https://alimarket.tmall.com/markets/alimama/mingdian?ali_trackid=19_0d817aac96532fd8bcb274f349f22959&spm=875.7931836/A.2016006.d4.KI9Zhd"><img
+									class="slidImg" index='3' class="pic"
+									src="//img.alicdn.com/tps/TB1_2OWLVXXXXcTXVXXXXXXXXXX-1130-500.jpg"
+									alt="" /> </a></li>
+							<li class="picLi"><a
+								href="https://www.tmall.com/wow/brand/act/fashion?acm=lb-zebra-2386-265936.1003.4.410386&scm=1003.4.lb-zebra-2386-265936.OTHER_1_410386&ali_trackid=19_921c16a74e7fcc1cefd30e011f187d56&spm=875.7931836/A.2016006.d2.KI9Zhd"><img
+									class="slidImg" index='4' class="pic"
+									src="//img.alicdn.com/tps/TB1JVu7LVXXXXacXFXXXXXXXXXX-1130-500.jpg"
+									alt="" /> </a></li>
+							<li class="picLi"><a
+								href="https://alimarket.tmall.com/markets/alimama/mingdian?ali_trackid=19_0d817aac96532fd8bcb274f349f22959&spm=875.7931836/A.2016006.d4.KI9Zhd"><img
+									class="slidImg" index='5' class="pic"
+									src="//img.alicdn.com/tps/TB1Lw9SLVXXXXajaXXXXXXXXXXX-1130-500.jpg"
+									alt="" /> </a></li>
+						</ul>
+					</div>
+
+					<div class="sBottom">
+						<ul class="focusUl">
+							<li index="1" class="focusLi on"></li>
+							<li index="2" class="focusLi"></li>
+							<li index="3" class="focusLi"></li>
+							<li index="4" class="focusLi"></li>
+							<li index="5" class="focusLi"></li>
+						</ul>
+					</div>
+
+
+					<span class="prev hidden">&lt;</span> <span class="next hidden">&gt;</span>
+				</div>
+
+				<div id="menu"></div>
+
+			</div>
+
+
+		</div>
+
+
+		<!-- 商品列表 -->
+		<div id="main"></div>
+		<div id="end">
+			<i class="iconfont endicon">&#xe600;</i>
+		</div>
+
+		<div id="footer"></div>
+		<div id="toTop" class="hidden">
+			<i class="iconfont totop">&#xe663;</i>
+			<div class="topdiv">顶部</div>
+		</div>
+	</div>
+
+
+
+	<!-- 聊天列表 -->
+	<div id="chatroom" class="hidden">
+		<div id="logoContainer" userid="${user.id }">
+			<img alt="" src="upload/${user.userimg }" width="30" height="30">
+			<span id="logoUsername">${user.name }</span> <span id="exitBtn">×</span>
+		</div>
+		<div id="chatContainer">
+
+			<div id="messageContainer">
+				<div id="messageList"></div>
+				<div id="middd"
+					style="border-bottom: 1px solid #dddddd;height: 22px;background-color: #f1f1f1;">
+					<span class="emotion"><i class="fa fa-meh-o fa-2x"
+						aria-hidden="true"></i> </span>
+				</div>
+				<div id="sendMessage">
+					<textarea id="messageTxt"></textarea>
+					<div id="sendBtnArea">
+						<label> <input type="checkbox" id="autoScollBtn"
+							checked="checked" />自动滚动开关 </label>
+						<div id="sendBtnDiv">
+							<span id="tips">按下Ctrl+Enter</span> <input type="button"
+								value="发送" id="sendBtn" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 
+			<div id="rightSide">
+				<img class="gg" src="image/flq.jpg"></img> 
+			</div>
+			 -->
+		</div>
+	</div>
+
+</body>
+</html>

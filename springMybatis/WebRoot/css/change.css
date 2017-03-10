@@ -1,0 +1,84 @@
+#pic{
+	    height: 100%;
+    width: 100%;
+}
+#btnxDialogClose{
+	 width: 20px;
+    height: 20px;
+    text-align: -webkit-center;
+    position: relative;
+    top: -44px;
+    left: 870px;
+    cursor: pointer;
+}
+#main{
+	    width: 500px;
+}
+.piclist{
+	    width: 100px;
+    height: 80px;
+    border: 1px solid gainsboro;
+    float: left;
+    margin: 10px;
+}
+#piclista{
+	  background-color: #EFF4F8;
+	   
+}
+#piclistb{
+	    background-color: aliceblue;
+}
+#piclistc{
+	background-color: antiquewhite;
+}
+#piclistd{
+	    background-color: aqua;
+}
+#picliste{
+	background-color: black;
+}
+#piclistf{
+	background-color: blueviolet;
+}
+#piclistg{
+	    background-color: #3887FF;
+}
+#piclisth{
+	    background-color: chartreuse;
+}
+#piclisti{
+	background-color: darkgray;
+}
+#piclistj{
+	    background-color: white;
+}
+#piclistk{    background-color: whitesmoke;}
+#piclistl{
+	  background-color: #c11717;
+}
+.piclist:hover{
+   background-color: #333;
+    opacity: 0.5;
+    border: 1px solid  #3887FF;
+	}
+.gou{
+    position: absolute;
+    padding: 0 0 0 82px;
+}
+#btnlist{
+	    height: 50px;
+    position: relative;
+    top: 300Px;
+}
+#btnq{
+    position: relative;
+    width: 100px;
+    height: 35px;
+    margin: 0 140px 0 75px;
+}
+#btnx{
+	    position: relative;
+   
+    width: 100px;
+    height: 35px;
+}

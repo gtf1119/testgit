@@ -1,0 +1,273 @@
+#orderCon{
+	width:100%;
+	
+}
+
+#order{
+    width: 1180px;
+   
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
+
+
+.orderNav{
+
+    padding: 10px 20px;
+    background: white;
+    font-weight: bold;
+}
+
+.orderid{
+	font-size:14px;
+}
+.orderContainer{
+
+
+	background:white;
+	margin-top:20px;
+}
+
+.orderType{
+    padding: 20px 0 20px 0px;
+    background: white;
+    margin-top: 20px;
+}
+
+.chooseOrder{
+    padding: 17px 20px;
+    cursor:pointer;
+    user-select: none;
+}
+
+.orderClick{
+	border-bottom: 3px solid #c40000;
+}
+
+.actionBar{
+	overflow:hidden;
+    padding: 10px 0;
+    border-top: 5px solid #c40000;
+    margin-top:20px;
+}
+.bar{
+	float:left;
+}
+
+.orderBar{
+    width: 380px;
+    padding-left: 20px;
+}
+
+.priceBar{
+    padding: 0 46px;
+}
+
+.beginBar{
+  	 padding: 0 58px;
+}
+
+.endBar{
+     padding: 0 58px;	
+}
+
+.statusBar{
+    padding: 0 49px;
+}
+
+
+.handleBar{
+    padding: 0 56px;	
+}
+
+.orderGoodsList{
+  
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.goodsinfo{
+	width:410px;
+	overflow:hidden;
+    padding: 10px 0;
+    position:relative;
+}
+.imgCon{
+    position: relative;
+    left: 20px;
+    float:left;
+}
+
+.imgCon>img{
+	width:100px;
+	
+}
+
+.goodsname{
+	float: left;
+    position: relative;
+    left: 40px;
+    width: 210px;
+   text-align: left;
+    height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.seller{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    float: left;
+    padding: 10px;
+}
+.goodsnum{
+    float: left;
+    padding: 39px 0;
+ 
+    position: relative;
+  
+    left: 50px;
+
+}
+
+.goodsprice{
+  
+    width:124px;
+  	color: #c40000;
+}
+
+.starttime{
+	width:180px;
+}
+
+.endtime{
+	
+	width:180px;
+
+}
+
+.status{
+
+	width:130px;
+    
+}
+
+.handlemodule{
+	padding: 39px 0;
+	width:172px;
+    text-align:center;
+}
+
+
+
+.ordertable{
+	width:100%;
+	border-collapse: collapse;
+}
+.ordertable td{
+	padding:10px 0;
+	text-align:center;
+    border: 1px solid #dedede;
+}
+
+.btnTake{
+    border-radius: 0 !important;
+    background: #70b9ff !important;
+    border: 0 !important;
+}
+
+.page{
+	background: #f7f7f7;
+}
+.page .select:hover{
+	border:1px solid #848080;
+}
+
+.btnPay{
+	border-radius: 0 !important;
+    background: #c40000 !important;
+    border: 0 !important;
+}
+
+.btnComment{
+    border-radius: 0 !important;
+    background: #00c4b2 !important;
+    border: 0 !important;
+    padding: 6px 30px !important;
+}
+
+.btnHasCom{
+	border-radius: 0 !important;
+    background: pink !important;
+    border: 0 !important;
+    padding: 6px 24px !important;
+    cursor: text !important;
+}
+.searchId{
+    float: right;
+    position: relative;
+    top: -3px;
+}
+
+.btnSearchId{
+	border-radius: 0 !important;
+    background: #c40000 !important;
+    border: 0 !important;
+}
+
+.txtSearchId{
+    border: 1px solid #e4e4e4 !important;
+}
+
+.statustype{
+	width: 50px;
+    margin: 0 auto;
+    padding: 4px 10px;
+   
+}
+
+.payclick{
+	background:#c40000;
+	color:white;
+}
+
+.haspayclick{
+	background:#70b9ff;
+	color:white;
+}
+
+.receiveclick{
+	background: #00c4b2;
+	color:white;
+}
+.hasComment{
+	background: pink;
+	color:white;
+}
+
+#titleBar{
+	background:#c40000;
+}
+
+.dialogBtn{
+	background:#c40000 !important;
+    border: 1px solid #900101 !important;
+    padding: 10px 40px !important;
+}
+#dialog{
+	border:1px solid #8a0101;
+}
+
+#btnClose{
+	border:1px solid #8a0101;
+}
+
+#btnClose:hover{
+	background:#e01e1e;
+}
+
+.delOrder{
+    margin-left: 10px;
+    font-size: 14px;
+}

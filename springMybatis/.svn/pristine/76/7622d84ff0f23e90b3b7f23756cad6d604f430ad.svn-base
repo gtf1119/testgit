@@ -1,0 +1,25 @@
+.default{
+	width:100px;
+	height:100px;
+	background-color:black;
+	
+	transition: all 1000ms;
+}
+
+.newWidth{
+	width:200px;
+}
+
+.redquare{
+	position:absolute;
+	left:10px;
+	width:100px;
+	height:100px;
+	background-color:red;
+	transition: all 1000ms;
+}
+
+.newquare{
+	position:absolute;
+	left:1400px;
+}

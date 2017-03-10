@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ggg.mapper.GoodsMapper">
+	<resultMap type="Goods" id="Goods">
+		<id property="goodsId" column="GOODSID"/>
+		<result property="goodsName" column="GOODSNAME"/>
+		<result property="goodsPrice" column="PRICE"/>
+		<result property="goodsNum" column="NUM"/>
+		<result property="goodsSales" column="SALES"/>
+		<result property="evaluatenum" column="EVALUATENUM"/>
+		<result property="goodsDes" column="DES"/>
+		<result property="createTime" column="CREATETIME"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="typeId" column="TYPE_ID"/>
+		<result property="userName" column="USERNAME"/>
+		<result property="typeName" column="TYPENAME"/>
+		
+		<collection property="goodsImgList" ofType="GoodImg">
+			<id property="id" column="IMGID"/>
+			<result property="filename" column="IMGFILENAME"/>
+			<result property="createtime" column="IMGCREATETIME"/>
+			<result property="goodsid" column="IMGGOODSID"/>
+		</collection>
+	</resultMap>
+	
+
+	
+	<select id="queryGoods" parameterType="GridCondition" resultMap="Goods">
+SELECT T3.GOODSID,T3.GOODSNAME,T3.PRICE,T3.NUM,T3.SALES,T3.EVALUATENUM,T3.DES,T3.CREATETIME,T3.USERNAME,T3.USER_ID,T3.TYPE_ID,
+T3.TYPENAME,I.ID AS IMGID,I.FILENAME AS IMGFILENAME,I.CREATETIME AS "IMGCREATETIME",I.GOODS_ID AS IMGGOODSID FROM
+(SELECT T2.ID AS GOODSID,T2.GOODSNAME,T2.PRICE,T2.NUM,T2.SALES,T2.EVALUATENUM,T2.DES,T2.CREATETIME,T2.USERNAME,T2.USER_ID,T2.TYPE_ID,T2.TYPENAME FROM 
+(SELECT T1.ID,T1.GOODSNAME,T1.PRICE,T1.NUM,T1.SALES,T1.EVALUATENUM,T1.DES,T1.CREATETIME,T1.USERNAME,T1.USER_ID,T1.TYPE_ID,T1.TYPENAME,ROWNUM AS RN FROM 
+(SELECT G.ID,G.NAME AS GOODSNAME,G.PRICE,G.NUM,G.SALES,G.EVALUATENUM,
+G.DES,TO_CHAR(G.CREATETIME,'yyyy-MM--DD hh24:mi:ss') AS CREATETIME,U.NAME AS USERNAME,G.USER_ID,G.TYPE_ID,T.NAME AS TYPENAME FROM T_GOODS G 
+INNER JOIN T_TYPE T ON G.TYPE_ID = T.ID 
+INNER JOIN T_USER U ON G.USER_ID = U.ID ${condition} ORDER BY CREATETIME DESC) T1) T2 
+WHERE T2.RN &gt;(#{pageNum}-1)*#{pageSize} AND T2.RN &lt;= #{pageNum}*#{pageSize}) T3
+LEFT JOIN T_IMG I ON I.GOODS_ID = T3.GOODSID ORDER BY T3.CREATETIME DESC
+
+	</select>
+	
+	<select id="queryCount" parameterType="GridCondition" resultType="Integer">
+		SELECT COUNT(0) FROM T_GOODS G INNER JOIN T_TYPE T ON G.TYPE_ID = T.ID
+INNER JOIN T_USER U ON G.USER_ID = U.ID ${condition}
+	</select>
+	
+	<!--parameterType传入参数  resultType返回参数  -->
+	<insert id="insert" parameterType="Goods">
+		<selectKey keyProperty="goodsId" order="BEFORE" resultType="String">
+			SELECT SYS_GUID() FROM DUAL
+		</selectKey>
+		INSERT INTO T_GOODS(ID,NAME,PRICE,NUM,SALES,EVALUATENUM,DES,USER_ID,TYPE_ID) VALUES
+		(#{goodsId},#{goodsName},#{goodsPrice},#{goodsNum},#{goodsSales},#{evaluatenum},#{goodsDes},#{userId},#{typeId})
+	</insert>
+	
+	<update id="update" parameterType="Goods">
+		UPDATE T_GOODS SET NAME=#{goodsName},PRICE=#{goodsPrice},NUM=#{goodsNum},SALES=#{goodsSales},DES=#{goodsDes},TYPE_ID=#{typeId} WHERE ID=#{goodsId}
+		
+	</update>
+	
+	<delete id="delete" parameterType="String">
+		DELETE FROM T_GOODS WHERE ID=#{ID}
+	</delete>
+	
+	<select id="queryByGoodsId" parameterType="GridCondition" resultMap="Goods">
+		SELECT T3.GOODSID,T3.GOODSNAME,T3.PRICE,T3.NUM,T3.SALES,T3.EVALUATENUM,T3.DES,T3.CREATETIME,T3.USERNAME,T3.USER_ID,T3.TYPE_ID,
+T3.TYPENAME,I.ID AS IMGID,I.FILENAME AS IMGFILENAME,I.CREATETIME AS "IMGCREATETIME",I.GOODS_ID AS IMGGOODSID FROM
+(SELECT T2.ID AS GOODSID,T2.GOODSNAME,T2.PRICE,T2.NUM,T2.SALES,T2.EVALUATENUM,T2.DES,T2.CREATETIME,T2.USERNAME,T2.USER_ID,T2.TYPE_ID,T2.TYPENAME FROM 
+(SELECT T1.ID,T1.GOODSNAME,T1.PRICE,T1.NUM,T1.SALES,T1.EVALUATENUM,T1.DES,T1.CREATETIME,T1.USERNAME,T1.USER_ID,T1.TYPE_ID,T1.TYPENAME,ROWNUM AS RN FROM 
+(SELECT G.ID,G.NAME AS GOODSNAME,G.PRICE,G.NUM,G.SALES,G.EVALUATENUM,
+G.DES,TO_CHAR(G.CREATETIME,'yyyy-MM--DD hh24:mi:ss') AS CREATETIME,U.NAME AS USERNAME,G.USER_ID,G.TYPE_ID,T.NAME AS TYPENAME FROM T_GOODS G 
+INNER JOIN T_TYPE T ON G.TYPE_ID = T.ID 
+INNER JOIN T_USER U ON G.USER_ID = U.ID ${condition} ORDER BY CREATETIME DESC) T1) T2 ) T3
+LEFT JOIN T_IMG I ON I.GOODS_ID = T3.GOODSID ORDER BY T3.CREATETIME DESC
+	</select>
+	
+	<update id="updateSaleAndNum" parameterType="Goods">
+		UPDATE T_GOODS SET NUM=#{goodsNum},SALES=#{goodsSales} WHERE ID=#{goodsId}
+	</update>
+	
+	<select id="queryById" parameterType="String" resultMap="Goods">
+		SELECT * FROM T_GOODS WHERE ID=#{ID}
+	</select>
+</mapper>

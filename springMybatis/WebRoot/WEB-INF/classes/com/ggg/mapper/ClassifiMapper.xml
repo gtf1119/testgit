@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ggg.mapper.ClassifiMapper">
+	<resultMap type="Classifi" id="Classifi">
+		<id property="id" column="ID"/>
+		<result property="cid" column="	CID"/>
+		<result property="name" column="NAME"/>	
+	</resultMap>
+	
+	
+	<resultMap type="Classifi" id="ClassifilIST">
+		<id property="id" column="ID"/>
+		<result property="cid" column="	CID"/>
+		<result property="name" column="NAME"/>	
+		<collection property="titlelist" resultMap="title"></collection>
+	</resultMap>
+	
+	<resultMap type="Title" id="title">
+		<id property="id" column="ID"/>
+		<result property="titlecid" column="TITLECID"/>
+		<result property="titleid" column="TITLEID"/>
+		<result property="titlename" column="TITLENAME"/>
+		<collection property="goodIntroList" resultMap="goodIntro"/>
+	</resultMap>
+	
+	<resultMap type="GoodIntro" id="goodIntro">
+		<id property="id" column="ID"/>
+		<result property="introid" column="INTROID"/>
+		<result property="introname" column="INTRONAME"/>
+		<result property="url" column="URL"/>
+		
+	</resultMap>
+	
+	<select id="queryClassifi" resultMap="ClassifilIST">
+		SELECT * FROM T_CLASSIFI C LEFT JOIN (SELECT * FROM T_TITLE T LEFT JOIN (SELECT * FROM T_GOODINTRO) G ON G.INTROID = T.TITLEID) T1 ON T1.TITLECID = C.CID ORDER BY CID
+	</select>
+	
+	<select id="queryCount" resultType="int">
+		SELECT COUNT(*) FROM T_CLASSIFI
+	</select>
+	
+	<select id="queryAllClassifi" parameterType="GridCondition" resultMap="Classifi">
+		SELECT T2.ID,T2.CID,T2.NAME FROM
+		(SELECT T1.ID,T1.CID,T1.NAME,ROWNUM AS RN FROM
+		(SELECT ID,CID,NAME FROM T_CLASSIFI E ${condition})T1)T2
+		WHERE T2.RN &gt; (#{pageNum}-1)*#{pageSize} AND T2.RN &lt;= #{pageNum}*#{pageSize}
+	</select>
+
+	<select id="queryAllCount" parameterType="GridCondition" resultType="Integer">
+		SELECT COUNT(0) FROM (SELECT * FROM T_CLASSIFI E ${condition})
+ 	</select>
+
+</mapper>

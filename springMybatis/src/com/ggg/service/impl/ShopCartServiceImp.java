@@ -1,0 +1,64 @@
+package com.ggg.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ggg.exception.SysException;
+import com.ggg.mapper.ShopCartMapper;
+import com.ggg.pojo.CartCondition;
+import com.ggg.pojo.GridCondition;
+import com.ggg.pojo.ShopCart;
+import com.ggg.service.ShopCartService;
+
+@Service
+public class ShopCartServiceImp implements ShopCartService {
+
+	@Autowired
+	private ShopCartMapper shopCartMapper;
+	
+	public List<ShopCart> queryShopCartByUserId(GridCondition condition) throws Exception {
+		List<ShopCart> sclist =  shopCartMapper.queryShopCartByUserId(condition);
+		return sclist;
+	}
+
+	public int insertShopCart(ShopCart shopCart) throws Exception {
+		int count = shopCartMapper.insertShopCart(shopCart);
+		return count;
+	}
+
+	public int deleteShopCart(ShopCart shopCart) throws Exception {
+		int count = shopCartMapper.deleteShopCart(shopCart);
+		return count;
+	}
+
+	public int updateShopCart(CartCondition condition) throws Exception {
+		int count =0;
+		try {
+			count = shopCartMapper.updateShopCart(condition);
+		} catch (Exception e) {
+			throw new SysException("ddddddd");
+		}
+		
+		return count;
+	}
+
+	public ShopCart queryByUIdAndGId(GridCondition condition) throws Exception {
+		ShopCart sc = shopCartMapper.queryByUIdAndGId(condition);
+		return sc;
+	}
+
+	public ShopCart queryPayList(CartCondition condition) throws Exception {
+		ShopCart sc = shopCartMapper.queryPayList(condition);
+		return sc;
+	}
+
+	public int queryAllCartCount(ShopCart shopCart) throws Exception {
+		int total = shopCartMapper.queryAllCartCount(shopCart);
+		return total;
+	}
+
+	
+
+}

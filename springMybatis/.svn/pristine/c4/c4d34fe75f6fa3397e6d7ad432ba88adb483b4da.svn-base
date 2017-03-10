@@ -1,0 +1,211 @@
+a{
+	text-decoration: none;
+}
+
+ul{
+	margin:0;
+	padding:0;
+}
+
+li{
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+
+.goodItem{
+    float: left;
+    margin-right: 15px;
+    width: 222px;
+    height: 390px;
+    position: relative;
+    border: 1px solid #eaeaea;
+    margin-top: 15px;
+}
+
+.goodItem:hover{
+	border: 1px solid #F40;
+}
+
+.top{
+	width:100%;
+}
+
+
+.picCon{
+	width:100%;
+}
+
+.goodsImg{
+    width: 222px;
+    height: 222px;
+}
+.goodMsg{
+	
+}
+
+.row{
+	padding:0 10px;
+	
+}
+
+.ship{
+	float:left;
+}
+
+.rowmsg1{
+    font-size: 18px;
+    color: #F40;
+    font-weight: 700;
+}
+
+.rowmsg2{
+    background: url(../../image/taobao/service.png);
+    display: inline-block;
+    width: 27px;
+    height: 16px;
+    background-position: -5px 406px;
+    margin-top: 4px;
+}
+
+.rowmsg3{
+	float:right;
+    font-size: 8px;
+    line-height: 22px;
+    color: #888;
+    font-size:12px\0;
+}
+
+
+.row1{
+	margin-top:11px;
+	overflow:hidden;	
+}
+
+.row2{
+	margin-top:6px;
+
+}
+
+.row3{
+	margin-top:6px;
+}
+
+.row a{
+	font-size: 8px;
+    color: #333;
+    font-size:12px\0;
+}
+.row>a>span{
+	float:left;
+}
+
+.shop{
+	color:#888;
+}
+
+.address{
+	float:right;
+	font-size: 8px;
+    color: #888;
+}
+
+.drs{
+    width: 13px;
+    float: left;
+    margin-top: 1px;
+}
+
+.dr{
+	width:8px;
+	height:2px;
+	background:#F40;
+	float:left;
+	margin-top:2px;
+	overflow:hidden;
+}
+
+.row > a:hover{
+	text-decoration:underline;
+	color:#F40;
+}
+
+.shop:hover{
+	color:#F40;
+}
+
+/*serviceIcon*/
+.row4{
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.serviceIcon_left{
+	width:210px;
+	overflow:hidden;
+    float: left;
+}
+.serviceList{
+	float:left;
+    margin-right: 4px;
+}
+.serviceListItem{
+
+	overflow:hidden;
+}
+
+
+
+.serviceIcon_right{
+	float:right;
+}
+
+.serviceIcon_ww{
+	display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: url(../../image/taobao/ww.png);
+    background-position: 23px 371px;
+}
+
+
+
+/*similiar*/
+.similiar{
+	width:100%;
+	position:absolute;
+	left:0;
+    text-align: center;
+}
+
+.btn{
+	position:relative;
+	
+	display: inline;
+	width: 50%;
+	height: 100%;
+}
+
+
+.btn1{
+	float:left;
+}
+.btn2{
+	
+	float: right;
+	
+}
+
+.btn>span{
+    display: block;
+    background: #f66d27;
+    width: 100%;
+    position: absolute;
+    top: -31px;
+    padding: 5px 0px;
+    color: white;
+}
+
+

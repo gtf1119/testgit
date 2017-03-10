@@ -1,0 +1,345 @@
+h1,h3,span {
+	margin: 0;
+	padding: 0;
+}
+
+.ownInfo {
+	width: 1180px;
+	margin: 14px auto;
+	position: relative;
+	border: 1px solid #e7eaf1;
+	box-sizing: border-box;
+}
+
+.bgImg {
+	height: 240px;
+	background: url(../../image/taobao/info_bg.jpg);
+	background-size: cover;
+}
+
+.infoMain {
+	position: relative;
+	margin: 0 24px 24px;
+}
+
+.userImgIcon {
+	width: 150px;
+	height: 150px;
+	position: absolute;
+	top: -60px;
+	border: 3px solid white;
+	background: #e4dbdb;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+
+.userImgItem {
+	width: 100%;
+	height: 100%;
+}
+
+.userImgMask {
+	width: 150px;
+	height: 150px;
+	position: absolute;
+	top: -60px;
+	background: black;
+	opacity: 0.3;
+	z-index: 100;
+	transition: all 250ms;
+}
+
+.userImgMask>span {
+	position: absolute;
+	top: 70px;
+	color: #fffdfd;
+	left: 27px;
+}
+
+.uploadfile {
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+}
+
+.infoContent {
+	padding-top: 16px;
+	padding-left: 32px;
+	border-left: 164px solid transparent;
+}
+
+.infoTop {
+	margin-bottom: 16px;
+	color: #797979;
+}
+
+.infoName {
+	font-size: 26px;
+	font-weight: 500;
+	line-height: 30px;
+}
+
+.infospan {
+	font-size: 14px;
+	color: #8590a6;
+}
+
+.infoBot {
+	position: relative;
+	padding-top: 8px;
+}
+
+#btnEdit {
+	position: absolute;
+	right: 0;
+	top: 0;
+	background: white;
+	color: #4fc6fb;
+	padding: 10px 15px;
+	top: -36px;
+}
+
+#btnEdit:hover {
+	background: #e8f8ff;
+}
+
+.fields {
+	padding-bottom: 100px;
+	margin-top: 10px;
+}
+
+.fieldItem {
+	padding: 30px 0;
+	border-bottom: 1px solid #ebeef5;
+}
+
+.returnTo {
+	position: absolute;
+	right: 0;
+	color: #8590a6;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+.field_title {
+	font-size: 15px;
+	font-weight: 700;
+	line-height: 36px;
+	color: #333;
+	position: absolute;
+}
+
+.field_content {
+	padding: 0 64px 0 140px;
+	line-height: 36px;
+	font-size: 14px;
+}
+
+.editContent {
+	padding: 0 64px 0 140px;
+	line-height: 36px;
+	font-size: 14px;
+}
+
+.edit {
+	padding-left: 20px;
+	font-weight: 100;
+	color: #3e7ac2;
+	cursor: pointer;
+}
+
+.txtDiv {
+	width: 540px;
+	padding: 10px 0;
+}
+
+.txtEdit {
+	width: 100%;
+	padding: 8px 10px !important;
+	border: 1px solid #e4e4e4 !important;
+}
+
+.txtEdit:focus {
+	border: 1px solid #9fadc7 !important;
+}
+
+.btnSave {
+	padding: 7px 20px !important;
+	font-size: 16px !important;
+	background: #0f88eb !important;
+}
+
+.btnSave:hover {
+	background: #0678d6 !important
+}
+
+.btnCancel {
+	margin-left: 20px;
+	padding: 7px 20px !important;
+	font-size: 16px !important;
+	background: white !important;
+	border: 1px solid #9fadc7 !important;
+	color: #9fadc7 !important;
+}
+
+.lbl {
+	cursor: pointer;
+}
+
+#lblSex2 {
+	margin-left: 59px;
+}
+
+#tabID {
+	width: 1180px;
+	margin: 0 auto;
+	position: relative;
+}
+
+.allCon {
+	position: relative;
+	float: left;
+}
+
+.tab {
+	float: left;
+	cursor: pointer;
+	user-select: none;
+	text-align: center;
+	padding: 15px 0px;
+	font-size: 22px;
+	letter-spacing: 12px;
+	position: relative;
+	z-index: 2;
+}
+
+.tabSelected {
+	background: #68bcff;
+	color: white;
+}
+
+.tab:hover {
+	color: #333;
+}
+
+.moveBar {
+	width: 295px;
+	height: 59px;
+	background: #d3f1ff;
+	position: absolute;
+	z-index: 1;
+	transition: all 250ms;
+	left: 0;
+}
+
+#ifra {
+	width: 100%;
+	height: 100%;
+	margin-top: 10px;
+}
+
+.tabItemCon {
+	position: absolute;
+	top: 1px;
+	background: white;
+	opacity: 0;
+	transition: all 250ms;
+}
+
+.tabItem {
+	padding: 10px 80px;
+	font-size: 0.8em;
+	letter-spacing: 0px;
+	cursor: pointer;
+	position: relative;
+	z-index: 2;
+}
+
+.tabItem:hover {
+	background: #c4edff;
+}
+
+.moveItem {
+	width: 100%;
+	height: 37px;
+	background: red;
+	position: absolute;
+	top: 0px;
+	z-index: 1;
+	transition: all 250ms;
+}
+
+@media screen and (min-width:320px) and (max-width:720px) {
+	#content {
+		width: 100%;
+	}
+	.ownInfo {
+		width: 100%;
+	}
+	#btnEdit {
+		position: static;
+	}
+	.ic_2 {
+		padding-top: 30px;
+		padding-left: 0;
+		border: 0;
+	}
+	.txtDiv {
+		width: 100%;
+	}
+	.btnSave {
+		padding: 7px 16px !important;
+	}
+	.btnCancel {
+		padding: 7px 16px !important;
+		margin-left: 23px;
+	}
+	#tabID {
+		width: 100%;
+	}
+	.tabItem {
+		padding: 10px 10px;
+	}
+	.tab {
+		font-size: 0.8em;
+		letter-spacing: 1px;
+	}
+}
+
+@media screen and (min-width:720px) and (max-width:900px) {
+	#content {
+		width: 100%;
+	}
+	.ownInfo {
+		width: 100%;
+	}
+	#btnEdit {
+		position: static;
+	}
+	.ic_2 {
+		padding-top: 30px;
+		padding-left: 0;
+		border: 0;
+	}
+	.txtDiv {
+		width: 100%;
+	}
+	.btnSave {
+		padding: 7px 16px !important;
+	}
+	.btnCancel {
+		padding: 7px 16px !important;
+		margin-left: 23px;
+	}
+	
+	#tabID {
+		width: 100%;
+	}
+	.tabItem {
+		padding: 10px 10px;
+	}
+	.tab {
+		font-size: 0.8em;
+		letter-spacing: 1px;
+	}
+}

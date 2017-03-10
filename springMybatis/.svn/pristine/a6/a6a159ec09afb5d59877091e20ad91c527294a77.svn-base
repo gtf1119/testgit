@@ -1,0 +1,15 @@
+$(function() {
+	var t = new Tab({
+		renderTo : "#tab",
+		dataSource : [ {
+			key : "01",
+			value : "聊天"
+		}, {
+			key : "02",
+			value : "添加好友"
+		}, {
+			key : "",
+			value : "管理好友"
+		} ]
+	});
+});

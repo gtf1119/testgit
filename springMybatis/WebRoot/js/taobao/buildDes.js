@@ -1,0 +1,187 @@
+var buildDes = {
+	init : function(args){
+		buildDes.getDataSource(args);
+	},
+	getDataSource : function(args){
+		if(typeof args.dataSource == "string"){
+			$.ajax({
+				url : args.dataSource,
+				type : "POST",
+				dataType : "text",
+				data : args.ajaxData,
+				success : function(json){
+					var obj = eval("("+json+")");
+					args.data = obj;
+					buildDes.build(args);
+				}
+			});
+		}else{
+			args.data = args.dataSource;
+			buildDes.build(args);
+		}
+	},
+	build : function(args){
+		var rendTo = $(args.rendTo);
+		var detail = $("<div id='detail' goodsId='"+args.data.goodsId+"'></div>").appendTo(rendTo);
+		var detail_left = $("<div id='detail_left'></div>").appendTo(detail);
+		var detail_right = $("<div id='detail_right'></div>").appendTo(detail);
+		//left
+		var bigPic = $("<div class='bigPic'></div>").appendTo(detail_left);
+		var smallPic = $("<div class='smallPic'></div>").appendTo(detail_left);
+		
+		$("<img class='bigImg' src='upload/"+args.data.goodsImgList[0].filename+"' alt='' />").appendTo(bigPic);
+		$(args.data.goodsImgList).each(function(i,p){
+			var smallImg = $("<div class='smallImg'><div>").appendTo(smallPic);
+			$("<img src='upload/"+p.filename+"' />").appendTo(smallImg);
+		});
+		
+		//right
+		var detailContent =  $("<div class='detailContent'></div>").appendTo(detail_right);
+		var detailPanel =  $("<div class='detailPanel'></div>").appendTo(detail_right);
+		var freight =  $("<div class='freight'></div>").appendTo(detail_right);
+		var salePanel = $("<ul class='salePanel'></ul>").appendTo(detail_right);
+		var num =  $("<div class='num'></div>").appendTo(detail_right);
+		var handle =  $("<div class='handle'></div>").appendTo(detail_right);
+		
+		//detailContent
+		$("<h1 class='detailTitle'>"+args.data.goodsName+"</h1>").appendTo(detailContent);
+		$("<p class='detailDes'>"+args.data.goodsDes+"</p>").appendTo(detailContent);
+		
+		
+		//detailPanel
+		var goodPrice =  $("<div class='goodPrice'></div>").appendTo(detailPanel);
+		var ticket = $("<div class='ticket'></div>").appendTo(detailPanel);
+		$("<div class='dt'>商品价格</div>").appendTo(goodPrice);
+		$("<div class='dd'><span class='goodpricespan'><span>￥</span>"+args.data.goodsPrice+"</span></div>").appendTo(goodPrice);
+		$("<div  class='clear' ></div>").appendTo(goodPrice);
+		
+		$("<div class='dt'>领&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;券</div>").appendTo(ticket);
+		$("<div class='dd'></div>").appendTo(ticket);
+		$("<div  class='clear' ></div>").appendTo(ticket);
+		
+		//freight
+		
+		$("<div class='dt'>运&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;费</div>").appendTo(freight);
+		$("<div class='dd'><span class='freightprice'>快递：0元</span></div>").appendTo(freight);
+		$("<div  class='clear' ></div>").appendTo(freight);
+		
+		//salePanel
+		$("<li class='saleLi'>月销量<span class='saleSpan'>"+args.data.goodsSales+"</span></li>").appendTo(salePanel);
+		$("<li>累计评价<span class='saleSpan'>"+args.data.evaluatenum+"</span></li>").appendTo(salePanel);
+		
+		//num
+		$("<div class='dt'>数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;量</div>").appendTo(num);
+		var dd1 = $("<div class='dd'></div>").appendTo(num);
+		var countCon =  $("<div class='countCon'></div>").appendTo(dd1);
+		$("<input type='text' class='txtCount' value='1'/>").appendTo(countCon);
+		$("<input type='button' value='+' class='btnplus'/>").appendTo(countCon);
+		$("<input type='button' value='-' class='btnminus'/>").appendTo(countCon);
+		$("<div  class='clear' ></div>").appendTo(num);
+		
+		var invent =  $("<div class='invent'></div>").appendTo(dd1);
+		$("<div class='inventNum'>库存：<span class='inventSpan'>"+args.data.goodsNum+"</span></div>").appendTo(invent);
+		
+		//handle
+		var dd2 = $("<div class='dd'></div>").appendTo(handle);
+		$("<div class='btnContainer'><input type='button' value='加入购物车' class='btnAddCart'/></div>").appendTo(dd2);
+		$("<div class='btnContainer'><input type='button' value='确认购买' class='btnConfirmBuy'></div>").appendTo(dd2);
+		buildDes.eventBind(args);
+	},
+	eventBind : function(args){
+		$(".smallImg").each(function(){
+			$(this).hover(function(){
+				var src = $(this).find("img").attr("src");
+				$(".bigImg").attr("src",src);
+			});
+		});
+		
+		
+		var goodsId = $("#detail").attr("goodsId");
+		var userId = $(".userid").text();
+		
+		var buyNum = $(".txtCount").val();
+		$(".btnminus").addClass("btnDisable");
+		$(".btnminus").click(function(){
+			if(buyNum == 1){
+				$(".btnminus").addClass("btnDisable");
+				return;
+			}
+			buyNum --;
+			$(".btnminus").removeClass("btnDisable");
+			$(".btnplus").removeClass("btnDisable");
+			$(".txtCount").val(buyNum);
+		});
+		
+		$(".btnplus").click(function(){
+			if(buyNum == 99){
+				$(".btnplus").addClass("btnDisable");
+				return;
+			}
+			buyNum ++;
+			$(".btnminus").removeClass("btnDisable");
+			$(".btnplus").removeClass("btnDisable");
+			$(".txtCount").val(buyNum);
+		});
+		
+		$(".txtCount").bind("input propertychange",function(){
+			buyNum = $(".txtCount").val();
+			var reg = new RegExp(eval("/^[0-9]{1,2}$/"));
+			if(reg.test(buyNum) == false){
+				setTimeout(function(){
+						buyNum = 1;
+						$(".txtCount").val(buyNum);
+				
+				},1000);
+			}
+			
+		});
+		
+		//添加商品进购物车
+		$(".btnAddCart").click(function(){
+			$.post("insertShopCart.action",{
+				userId : userId,
+				goodsId : goodsId,
+				goodsNum : buyNum
+			},function(json){
+				if(json.isSuccess == "true"){
+					if(navigator.userAgent.indexOf("iPhone")<-1)
+						var successInfo = $("<div class='successInfo'>新增<span class='newNum'>"+buyNum+"</span>件商品</div>").appendTo($("#navbg"));
+					$("<div class='successXf'></div>").appendTo(successInfo);
+					
+					dialog.show({
+						title:"天狗",
+						url:"html/taobao/dialog/addCart.jsp",
+						width:295,
+						height:160
+							
+					});
+					changeCartNum();
+					setTimeout(function(){
+						
+						$(successInfo).remove();
+					},3000);
+				}else{
+					if(json.errMsg == null){
+						alert("尚未登录，请登录");
+					}else{
+						alert("添加失败");
+					}
+					
+				}
+			});
+		});
+		
+		
+		function changeCartNum(){
+			//不延时查询数据会有错误
+			setTimeout(function(){
+				shopCartNum.init({
+					rendTo : ".cartNum",
+					dataSource : "queryAllCartCount.action"
+				});
+			},50);
+			
+		}
+	
+	}
+};

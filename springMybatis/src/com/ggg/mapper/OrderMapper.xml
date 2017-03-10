@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ggg.mapper.OrderMapper">
+	<resultMap type="Order" id="Order">
+		<id property="id" column="ORDERID"/>
+		<result property="begintime" column="BEGINTIME"/>
+		<result property="endtime" column="ENDTIME"/>
+		<result property="status" column="STATUS"/>
+		<result property="paymoney" column="PAYMONEY"/>
+		<association property="user" javaType="User">
+			<id property="id" column="USERID"/>
+			<result property="name" column="USERNAME"/>
+		</association>
+		<collection property="goodslist" ofType="Goods">
+			<id property="goodsId" column="GOODSID"/>
+				<result property="goodsName" column="GOODSNAME"/>
+				<result property="goodsPrice" column="GOODSPRICE"/>
+				<result property="goodsNum" column="NUM"/>
+				<collection property="goodsImgList" ofType="GoodImg">
+					<id property="id" column="IMGID"/>
+					<result property="filename" column="IMGFILENAME"/>
+					<result property="createtime" column="IMGCREATETIME"/>
+					<result property="goodsid" column="IMGGOODSID"/>
+				</collection>
+		</collection>
+		<collection property="ordergoods" ofType="OrderGoods">
+			<id property="id" column="OGID"/>
+			<result property="goodsnum" column="GOODSNUM"/>
+			<association property="seller" javaType="User">
+				<id property="id" column="SELLERID"/>
+				<result property="name" column="SELLER"/>
+			</association>
+			<association property="goods" javaType="Goods">
+				<id property="goodsId" column="GOODSID"/>
+				<result property="goodsName" column="GOODSNAME"/>
+				<result property="goodsPrice" column="GOODSPRICE"/>
+				<result property="goodsNum" column="NUM"/>
+				<collection property="goodsImgList" ofType="GoodImg">
+					<id property="id" column="IMGID"/>
+					<result property="filename" column="IMGFILENAME"/>
+					<result property="createtime" column="IMGCREATETIME"/>
+					<result property="goodsid" column="IMGGOODSID"/>
+				</collection>
+			</association>
+		</collection>
+	</resultMap>
+	
+	<insert id="addOrder"  parameterType="Order">
+		<selectKey order="BEFORE" keyProperty="id" resultType="String">
+			SELECT SYS_GUID() FROM DUAL
+		</selectKey>
+		INSERT INTO T_ORDER(ID,PAYMONEY,USERID,USERNAME) VALUES(#{id},#{paymoney},#{user.id},#{user.name})
+	</insert>
+
+	<select id="queryOrder" parameterType="GridCondition" resultMap="Order">
+SELECT T3.ORDERID,T3.BEGINTIME,T3.ENDTIME,T3.STATUS,T3.PAYMONEY,T3.USERID,T3.USERNAME,OG.ID AS OGID,OG.GOODSNUM AS GOODSNUM,G.NAME AS GOODSNAME,G.ID AS GOODSID,G.PRICE AS GOODSPRICE,I.FILENAME AS IMGFILENAME ,U2.NAME AS SELLER,U2.ID AS SELLERID FROM(
+SELECT T2.ORDERID,T2.BEGINTIME,T2.ENDTIME,T2.STATUS,T2.PAYMONEY,T2.USERID,T2.USERNAME,T2.RN FROM(
+SELECT T.ORDERID,T.BEGINTIME,T.ENDTIME,T.STATUS,T.PAYMONEY,T.USERID,T.USERNAME,ROWNUM AS RN FROM(
+SELECT O.ID AS ORDERID,TO_CHAR(BEGINTIME,'yyyy-MM-DD hh24:mi:ss') AS BEGINTIME,TO_CHAR(ENDTIME,'yyyy-MM-DD hh24:mi:ss') AS ENDTIME,O.STATUS AS STATUS,O.PAYMONEY AS PAYMONEY ,
+U.ID AS USERID,U.NAME AS USERNAME FROM T_ORDER O INNER JOIN T_USER U ON U.ID = O.USERID ${condition} ORDER BY BEGINTIME DESC ) T)T2
+WHERE T2.RN &gt; (#{pageNum}-1)*#{pageSize} AND T2.RN &lt;= #{pageNum}*#{pageSize} ORDER BY BEGINTIME DESC)T3
+LEFT JOIN T_ORDER_GOODS OG ON OG.ORDERID=T3.ORDERID
+LEFT JOIN T_GOODS G ON OG.GOODSID = G.ID LEFT JOIN T_IMG I ON I.GOODS_ID = G.ID
+LEFT JOIN T_USER U2 ON U2.ID = G.USER_ID WHERE T3.USERID = #{userid}
+	</select>
+
+	<select id="queryOrderCount" parameterType="GridCondition" resultType="Integer">
+		SELECT COUNT(0) FROM (SELECT * FROM T_ORDER O ${condition} WHERE O.USERID = #{userid})
+	</select>
+
+	<update id="updateStatus" parameterType="Order">
+		
+		UPDATE T_ORDER SET STATUS = #{status},ENDTIME=SYSDATE WHERE ID=#{id}
+	</update>
+
+	<update id="updateStatusNoTime" parameterType="Order">
+		
+		UPDATE T_ORDER SET STATUS = #{status} WHERE ID=#{id}
+	</update>
+
+	<delete id="deleteByOrderId" parameterType="String">
+		DELETE FROM T_ORDER WHERE ID=#{ID}
+	</delete>
+
+	
+	<select id="queryVolume" parameterType="GridCondition" resultType="Integer">
+		SELECT COUNT(T1.GOODSNUM) FROM(
+SELECT O.ID,O.BEGINTIME,O.USERID,OG.GOODSID,OG.GOODSNUM ,G.TYPE_ID,T.NAME FROM T_ORDER O  LEFT JOIN T_ORDER_GOODS OG ON O.ID = OG.ORDERID
+LEFT JOIN T_GOODS G ON OG.GOODSID = G.ID 
+LEFT JOIN T_TYPE T ON G.TYPE_ID = T.ID WHERE O.USERID=#{userid} AND T.ID=#{typeid} AND TO_CHAR(TRUNC(O.BEGINTIME),'yyyymm') = TO_CHAR(TRUNC(SYSDATE),'yyyymm')
+)T1
+	</select>
+
+</mapper>

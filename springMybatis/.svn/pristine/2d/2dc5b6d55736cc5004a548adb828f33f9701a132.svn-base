@@ -1,0 +1,66 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ include file="common/private.jsp" %>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <base href="<%=basePath%>">
+    
+    <title>大杂烩</title>
+    
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+	<!--
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	-->
+<link rel="stylesheet" href="css/common/common.css" type="text/css"></link>
+<link rel="stylesheet" href="css/common/dialog.css" type="text/css"></link>
+<link rel="stylesheet" href="css/tableFrame.css" type="text/css"></link>
+<script type="text/javascript" src="js/jquery-1.8.3.js"></script>
+<script type="text/javascript" src="js/common/util.js"></script>
+<script type="text/javascript" src="js/tableFrame.js"></script>
+<script type="text/javascript" src="js/common/dialog.js"></script></head>
+  
+  <body>
+  	<table id="main" cellspacing="0" cellpadding="0">
+  		<tr>
+  			<td id="nav" colspan="2">
+  				<span id="targetFirst">商品管理系统</span>
+  				<div id="userImg">
+  					<img id="tx" src="image/tx.jpg" alt="" />
+  				</div>
+  				
+  				<div id="txCon" class="hidden">
+  					<div class="txxf"></div>
+  					<img id="txShow" src="image/tx.jpg" alt="" />
+  					
+				
+  				</div>
+  				<div id="tips">欢迎<%=userName %>登录</div>
+  				<div class="userid hidden"><%=userId %></div>
+  				<div id="btnExit">退出</div>
+  			</td>
+  			
+  		</tr>
+  		<tr>
+  			<td id="leftMenu">
+  				<div id="menu">
+  					
+  				</div>
+  				
+  			</td>
+  			<td id="ifraContainer">
+	  			
+	  				<iframe id="ifra" src=""  frameborder="0" ></iframe>
+	  			
+  				
+  			</td>
+  		</tr>
+  	</table>
+  	
+  
+  </body>
+</html>

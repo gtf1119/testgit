@@ -1,0 +1,127 @@
+$(function(){
+	
+	var LoginName = util.cookie.get("name");
+	if(LoginName != "" && LoginName != null){
+		$("#txtLoginName").val(LoginName);
+		$("#chkRm").prop("checked",true);
+		$("#txtPassword").focus();
+	}
+	
+	$("input[type='text'],input[type='password']").focus(function(){
+		hide(this);
+	}).blur(function(){
+		checkTxt(this);
+	}).keydown(function(event){
+		if(event.which == 13){
+			$("#btnLogin").click();
+		}
+	}).keyup(function(){
+		if($(this).val() == ""){
+			$(this).next().removeClass("hidden");
+		}else{
+			$(this).next().addClass("hidden");
+		}
+	});
+	
+	$(".placeholder").click(function(){
+		$(this).prev().focus();
+	});
+	
+	$("#btnLogin").click(function() {
+		if($(this).hasClass("btnErr") || $(this).hasClass("btnDisable") || $(this).hasClass("btnSuccess")){
+			return;
+		}
+		$(this).addClass("btnDisable");
+		var errCount = 0;
+		
+		// 遍历页面上的文本框和密码框
+		$("input[type='text'],input[type='password']").each(function() {
+			errCount += checkTxt(this);
+		});
+		if(errCount > 0){
+			$(this).removeClass("btnDisable");
+			return;
+		}
+		
+		$.post("loginUser.action",{
+			loginName : $("#txtLoginName").val(),
+			passWord : $("#txtPassword").val(),
+			code : $("#txtCode").val()
+		},function(json){
+			$("#btnLogin").removeClass("btnDisable");
+			if(json.isSuccess == "true"){
+				if($("#chkRm").prop("checked")){
+					util.cookie.set("name", $("#txtLoginName").val());
+				}else{
+					util.cookie.set("name", "");
+				}
+				$("#btnLogin").addClass("btnSuccess").val("登录成功，请稍候");
+				setTimeout(function(){
+					location.href=document.referrer;
+				},1500);
+			}else{
+				$("#btnLogin").addClass("btnErr").val("登录失败："+json.errMsg);
+				imageLoad();
+				$("#txtCode").val("");
+				setTimeout(function(){
+					$("#btnLogin").removeClass("btnErr").val("登录");
+				},1500);
+			}
+		});
+	});
+	
+	$("#pic").click(function(){
+		imageLoad();
+	});
+	imageLoad();
+		
+});
+
+function checkTxt(objTxt){
+	var textStr = $(objTxt).val();
+	var errTips = $(objTxt).next().next();
+	var errMsg = "请输入"+$(objTxt).attr("placeholder");
+	if(textStr == ""){
+		$(objTxt).addClass("txtErr");
+		$(errTips).text(errMsg);
+		
+		show(errTips,errMsg);
+		return 1;
+	}else{
+		$(objTxt).removeClass("txtErr");
+		hide(errTips,errMsg);
+		
+		return 0;
+	}
+};
+
+function show(errTips,errMsg){
+	if(util.isLTIE10()){
+		$(errTips).animate({
+			opacity:"1",
+			marginRight:7
+		},"fast");
+	}else{
+		$(errTips).addClass("showErrTips");
+	}
+}
+
+function hide(objTxt,errTips,errMsg){
+	$(objTxt).removeClass("txtErr");
+	var errTips = $(objTxt).next().next();
+	
+	$(errTips).removeClass("showErrTips");
+	if(util.isLTIE10()){
+		$(errTips).animate({
+			opacity:"0",
+			marginRight:"0px"
+		},"fast");
+	}
+	$(errTips).removeClass("showErrTips");
+}
+
+
+
+function imageLoad(){
+	$("#pic").attr("src",$("#pic").attr("basePath")+"?t="+new Date());
+}

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ggg.mapper.DelFileMapper">
+	<resultMap type="DelFile" id="DelFile">
+		<id property="id" column="ID"/>
+		<result property="fileName" column="FILENAME"/>
+		<result property="format" column="FORMAT"/>
+		<result property="fileSize" column="FILESIZE"/>
+		<result property="createTime" column="CREATETIME"/>
+	</resultMap>
+
+	
+	
+	<select id="queryAll" parameterType="GridCondition" resultMap="DelFile">
+		SELECT  T2.ID,T2.FILENAME,T2.FORMAT,T2.FILESIZE,T2.CREATETIME FROM
+		(SELECT T1.ID,T1.FILENAME,T1.FORMAT,T1.FILESIZE,T1.CREATETIME,ROWNUM AS RN FROM
+		(SELECT ID,FILENAME,FORMAT,FILESIZE,TO_CHAR(CREATETIME,'yyyy-MM-DD hh24:mi:ss') AS CREATETIME FROM T_DELFILE D ${condition} ORDER BY CREATETIME DESC)T1)T2
+		WHERE T2.RN &gt; (#{pageNum}-1)*#{pageSize} AND T2.RN &lt;= #{pageNum}*#{pageSize}
+	</select>
+	
+	<select id="queryAllCount" parameterType="GridCondition" resultType="Integer">
+		SELECT COUNT(0) FROM (SELECT * FROM T_DELFILE D ${condition})
+	
+	</select>
+
+	<insert id="insert" parameterType="DelFile">
+		<selectKey keyProperty="id" order="BEFORE" resultType="String">
+			SELECT SYS_GUID() FROM DUAL
+		</selectKey>
+		INSERT INTO T_DELFILE(ID,FILENAME,FORMAT,FILESIZE) VALUES
+		(SYS_GUID(),#{fileName},#{format},#{fileSize})
+	</insert>
+	
+<select id="queryDelFileAll" parameterType="String" resultMap="DelFile">
+	
+		SELECT ID,FILENAME,FILESIZE,FORMAT,CREATETIME FROM T_DELFILE 
+	</select>
+	
+
+	
+	
+</mapper>

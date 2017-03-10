@@ -1,0 +1,174 @@
+
+body{
+	min-width:857px;
+	
+}
+#manageTitle{
+	padding: 15px 20px;
+    font-size: 20px;
+}
+
+#manageSubTitle{
+	font-size: 13px;
+    color: #888;
+    padding: 0 0 10px 20px;
+}
+
+#condition{
+    padding: 0 10px 0 20px;
+    position: relative;
+}
+
+#queryTitle{
+    font-size: 20px;
+    padding: 0 0 10px 0;
+}
+
+#querySubTitle{
+	font-size: 13px;
+    color: #888;
+    padding: 0 0 10px 0;
+}
+
+.conditianTable{
+	width:100%;
+	
+}
+
+.conditionRow{
+	height:45px;
+	
+}
+
+.conditionCols{
+
+	float:left;
+}
+
+.conText{
+    font-size: 14px;
+    width: 60px;
+    text-align: right;
+    padding: 5px 10px 0 0;
+}
+
+.txt{
+	width:100%;
+}
+
+.messageBar{
+    position: relative;
+    padding: 10px 20px;
+}
+
+.userMessageTitle{
+	font-size:20px;
+}
+.messageBtns{
+    position: absolute;
+    right: 20px;
+    top: 12px;
+}
+
+.btnGrid{
+      margin: 0 0 0 10px;
+}
+
+#myGrid{
+	margin:20px;	
+}
+
+
+.boy {
+	border: 1px solid #2196F3;
+	width: 40px;
+	padding: 0px 0 2px 0;
+	text-align: center;
+	border-radius: 3px;
+	background-color: #e9f5ff;
+	color: #2196F3;
+	margin:0 auto;
+}
+
+.girl {
+	border: 1px solid #F44336;
+	width: 40px;
+	padding: 0px 0 2px 0;
+	text-align: center;
+	border-radius: 3px;
+	background-color: #ffefee;
+	color: #f44336;
+	margin:0 auto;
+}
+
+.girlSelected{
+	background:pink !important;
+}
+
+.boySelected{
+	background:#8dc4f5;
+}
+
+.page{
+	background: linear-gradient(to bottom, rgba(255,0,0,0),rgb(214, 237, 255));
+}
+
+.page .pageBtn{
+	
+	border:0;
+}
+
+.page .pageBtn:hover{
+	background:#61b5f7;
+}
+
+.page .select{
+	border:1px solid #ffaaaa;
+	background: white;
+
+}
+
+.pageTable{
+	color:#292929;
+}
+
+.page .selList{
+	border:1px solid #ffaaaa;
+	background:white;
+}
+
+
+.gender:hover{
+	background: #e0f0fc;
+}
+
+.defaultSelected {
+    background: #a2d6ff;
+}
+
+.gridImg{
+    width: 50px;
+    height: 50px;
+    margin-right: 5px;
+}
+
+#imgShowCon{
+	border:1px solid #bdbcbc;
+	position:absolute;
+	width:200px;
+	height:200px;
+	z-index:999;
+	background:white;
+}
+
+
+
+.xf{
+   position: absolute;
+    top: 12px;
+    right: -10px;
+    border-left: 10px solid #bdbcbc;
+    border-bottom: 10px solid transparent;
+    border-top: 10px solid transparent;
+}
+

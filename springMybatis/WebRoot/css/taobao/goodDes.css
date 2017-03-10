@@ -1,0 +1,35 @@
+.btnplus {
+	width: 18px !important;
+	padding: 0 !important;
+	border: 1px solid #C7C6C6 !important;
+	position: absolute;
+	top: 5px !important;
+	line-height: 18px !important;
+	border-radius: 0 !important;
+	background: white !important;
+	color: black !important;
+}
+
+.btnminus {
+	width: 18px !important;
+	padding: 0 !important;
+	border: 1px solid #C7C6C6 !important;
+	position: absolute;
+	bottom: 0 !important;
+	line-height: 18px !important;
+	border-radius: 0 !important;
+	background: white !important;
+	color: black !important;
+}
+
+@media screen and (min-width:320px) and (max-width:720px){
+	.btnplus {
+		width: 40px !important;
+		height: 40px !important;
+	}
+	.btnminus {
+		width: 40px !important;
+		height: 40px !important;
+		left: -40px;
+	}
+}

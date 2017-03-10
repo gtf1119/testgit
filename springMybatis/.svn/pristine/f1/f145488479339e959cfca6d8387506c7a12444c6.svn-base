@@ -1,0 +1,102 @@
+#loginPanel{
+	width: 300px;
+	margin:0 auto;
+	position:relative;
+	top:50%;
+	margin-top:-150px;
+}
+
+#loginTitle{
+	font-size:30px;
+	text-align:center;
+}
+
+#subTitle{
+	text-align:center;
+    padding: 15px 0;
+}
+
+input[type='text'],input[type='password']{
+	font-size: 14px;
+    margin: 0 0 12px 0;
+    width: 100%;
+}
+
+.errTips{
+	position:relative;
+	float:right;
+	color:red;
+    margin: -39px 3px 10px 0px;
+    opacity: 0;
+	transition: all 250ms;
+}
+
+.showErrTips{
+ 	opacity: 1;
+ 	margin: -39px 10px 10px 0px;
+}
+a{
+    float: right;
+    text-decoration: none;
+    color: #3699e8;
+}
+
+#lblRm{
+	float:left;
+}
+
+#btnLogin{
+    margin-top: 19px;
+    width: 100%;
+
+}
+
+#textCodeLine{
+	width:190px;
+	position:relative;
+}
+
+#pic{
+    position: absolute;
+    top: 180px;
+    top:180px\0;
+   
+    right: 0;
+    cursor: pointer;
+    
+}
+
+ @-moz-document url-prefix(){#pic{top:181px;}}
+
+/*登录失败的按钮样式*/
+.btnErr {
+	border: 2px solid #d60f00 !important;
+	background-color: #f5493d !important;
+}
+
+/*登录成功*/
+.btnSuccess {
+	border: 2px solid #009688 !important;
+	background-color: #25b788 !important;
+}
+
+.line{
+	position:relative;
+}
+
+.placeholder{
+    font-size: 14px;
+    position: absolute;
+    top: 7px;
+    left: 12px;
+    color: darkgray;
+    display:none;
+    display:block\0;
+}
+
+/*在IE10以上版本中隐藏，最终只在IE7~IE9中显示，因为只有IE7~IE9不支持placeholder*/
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+   .placeholder {
+		display: none; /*仅仅对>=IE10有效*/
+	}
+}

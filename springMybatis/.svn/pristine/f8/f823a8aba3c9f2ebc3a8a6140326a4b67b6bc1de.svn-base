@@ -1,0 +1,12 @@
+package com.ggg.service;
+
+import java.util.List;
+
+import com.ggg.pojo.Chat;
+import com.ggg.pojo.GridCondition;
+
+public interface ChatService {
+	public List<Chat> queryAllTxt(String condition) throws Exception;
+	
+	public void addMsg(Chat chat) throws Exception;
+}

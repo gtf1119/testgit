@@ -1,0 +1,79 @@
+$(function() {
+	$(".topleftcla").addClass("hidden");
+
+	$(".changetop").click(function() {
+		$(".topleftcla").addClass("hidden");
+		$(this).next().removeClass("hidden");
+	});
+	$("#changetopa").click();
+
+	$("#listbtnsa").click(function() {
+
+		$("#filehidden").click();
+	});
+
+	$(".btnddl").addClass("hidden");
+	$("#listbtnsa").mouseover(function() {
+		$(".btnddl").removeClass("hidden");
+
+	});
+
+	$("#btnnameaddl").on("mouseleave", function() {
+		$(this).addClass("hidden");
+	});
+
+	$("#ddlspana").click(function() {
+		$("#filehidden").click();
+	});
+	// 全选和全不选
+	$("#checktype").click(function() {
+		if (this.checked) {
+			$(".listarraymain :checkbox").attr("checked", true);
+		} else {
+			$(".listarraymain :checkbox").attr("checked", false);
+		}
+	});
+	$(".checklist").click(function() {
+		if ($(this).prop("checked") == false) {
+			$(".check").prop("checked", "");
+		} else {
+			var Num = 0;
+			for ( var i = 0; i < $(".checklist").length; i++) {
+				if ($(".checklist:eq(" + i + ")").prop("checked") == false) {
+					return;
+				} else {
+					Num++;
+				}
+			}
+			if (Num == $(".checklist").length) {
+				$(".check").prop("checked", "checked");
+			}
+		}
+	});
+	
+	$("#workleft").hover(function() {
+		// 鼠标进入菜单区域时显示背景色块
+		$("#menuBG").removeClass("hidden");
+	}, function() {
+		// 鼠标移出菜单区域时隐藏背景色块
+		$("#menuBG").addClass("hidden");
+	});
+	
+	$(".leftso").mouseenter(function(){
+		
+		var index = $(this).index();
+		var i = 63+(index * 50);
+		// 修改背景色div的top样式
+		$("#menuBG").css("top", i);
+	});
+	
+	$("#btnlistimg").focus(function(){
+		$("#btnlistimg").val("");
+	});
+	$("#btnlistimg").blur(function(){
+		$("#btnlistimg").val("搜索您的文件");
+	});
+	
+	
+	
+});

@@ -1,0 +1,55 @@
+package com.ggg.pojo;
+
+public class Chat {
+	private String id;
+	private String txt;
+	private String date;
+	private User user;
+	private String recid;
+	public String getRecid() {
+		return recid;
+	}
+	public void setRecid(String recid) {
+		this.recid = recid;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getTxt() {
+		return txt;
+	}
+	public void setTxt(String txt) {
+		this.txt = txt;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	public Chat() {
+		super();
+	}
+	public Chat(String txt, User user) {
+		super();
+		this.txt = txt;
+		this.user = user;
+	}
+	public Chat(String txt, User user, String recid) {
+		super();
+		this.txt = txt;
+		this.user = user;
+		this.recid = recid;
+	}
+	
+	
+}

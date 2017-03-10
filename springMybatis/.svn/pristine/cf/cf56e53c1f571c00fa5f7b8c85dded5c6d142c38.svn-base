@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ggg.mapper.ChatMapper">
+	<resultMap type="Chat" id="Chat">
+		<id property="id" column="CHATID"/>
+		<result property="txt" column="TXT"/>
+		<result property="date" column="CREATETIME"/>
+		<result property="recid" column="RECID"/>
+		<association property="user" javaType="User">
+			<id property="id" column="USERID"/>
+			<result property="loginname" column="LOGINNAME"/>
+			<result property="userimg" column="USERIMG"/>
+		</association>
+	</resultMap>
+	
+	<select id="queryAllTxt" parameterType="String" resultMap="Chat">
+		SELECT C.ID AS CHATID,C.TXT AS TXT,C.REC_ID AS RECID,TO_CHAR(C.CREATETIME,'yyyy-MM-dd HH24:mi:ss') AS CREATETIME,
+U.ID AS USERID,U.LOGINNAME AS LOGINNAME,U.USERIMG AS USERIMG FROM T_CHAT C INNER JOIN T_USER U ON C.USER_ID = U.ID 
+		${value}
+	</select>
+	
+	<insert id="addMsg" parameterType="Chat">
+		<selectKey keyProperty="id" order="BEFORE" resultType="String">
+			SELECT SYS_GUID() FROM DUAL
+		</selectKey>
+		INSERT INTO T_CHAT(ID,TXT,USER_ID,REC_ID) VALUES(#{id},#{txt},#{user.id},#{recid})
+	</insert>
+
+</mapper>

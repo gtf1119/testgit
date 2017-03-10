@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ggg.mapper.ShopCartMapper">
+	<resultMap type="ShopCart" id="ShopCart">
+		<id property="id" column="ID"/>
+		<result property="goodsnum" column="GOODSNUM"/>
+		<result property="createtime" column="CARTTIME"/>
+		<association property="user" resultMap="userResult"></association>
+		<association property="goods" resultMap="goodsResult"></association>
+		
+	</resultMap>
+	
+	<resultMap type="User" id="userResult">
+		<id property="id" column="USERID"/>
+		<result property="name" column="USERNAME"/>
+		<result property="userimg" column="USERIMG"/>
+	</resultMap>
+	
+	<resultMap type="Goods" id="goodsResult">
+		<id property="goodsId" column="GOODID"/>
+		<result property="goodsName" column="GOODNAME"/>
+		<result property="goodsPrice" column="GOODPRICE"/>
+		<collection property="goodsImgList" ofType="GoodImg">
+			<id property="id" column="IMGID"/>
+			<result property="filename" column="FILENAME"/>
+			<result property="goodsid" column="GOODSID"/>
+		</collection>
+	</resultMap>
+
+
+	<select id="queryShopCartByUserId" parameterType="GridCondition"  resultMap="ShopCart">
+	SELECT T.ID,T.USERID,T.GOODID,T.GOODSNUM,T.CARTTIME,T.USERNAME,T.GOODPRICE,T.GOODNAME,I.FILENAME FROM (SELECT C.ID AS ID,C.USER_ID AS USERID,C.GOODS_ID AS GOODID,C.GOODS_NUM AS GOODSNUM,TO_CHAR(CARTTIME,'yyyy-MM-DD hh24:mi:ss') AS CARTTIME,
+U.NAME AS USERNAME,G.PRICE AS GOODPRICE ,G.NAME AS GOODNAME FROM T_CART C LEFT JOIN T_USER U ON C.USER_ID = U.ID LEFT JOIN T_GOODS G ON G.ID = C.GOODS_ID ${condition}) T LEFT JOIN T_IMG I ON T.GOODID = I.GOODS_ID
+	
+	
+	</select>
+	
+	<insert id="insertShopCart" parameterType="ShopCart">
+		INSERT INTO T_CART(ID,USER_ID,GOODS_ID,GOODS_NUM) VALUES(SYS_GUID(),#{user.id},#{goods.goodsId},#{goodsnum})
+	</insert>
+	
+	<delete id="deleteShopCart" parameterType="ShopCart">
+		DELETE FROM T_CART WHERE USER_ID =#{user.id} AND GOODS_ID=#{goods.goodsId}
+	</delete>
+	
+	<update id="updateShopCart" parameterType="CartCondition">
+		UPDATE T_CART SET GOODS_NUM = #{goodsNum} WHERE USER_ID=#{userId} AND GOODS_ID=#{goodsId}
+	</update>
+	
+	<select id="queryByUIdAndGId" parameterType="GridCondition" resultMap="ShopCart">
+		SELECT ID,USER_ID AS USERID,GOODS_ID AS GOODID,GOODS_NUM AS GOODSNUM FROM T_CART ${condition}
+	</select>
+	
+	
+	<select id="queryPayList" parameterType="CartCondition"  resultMap="ShopCart">
+	SELECT T.ID,T.USERID,T.GOODID,T.GOODSNUM,T.CARTTIME,T.USERNAME,T.GOODPRICE,T.GOODNAME,I.FILENAME FROM (SELECT C.ID AS ID,C.USER_ID AS USERID,C.GOODS_ID AS GOODID,C.GOODS_NUM AS GOODSNUM,TO_CHAR(CARTTIME,'yyyy-MM-DD hh24:mi:ss') AS CARTTIME,
+U.NAME AS USERNAME,G.PRICE AS GOODPRICE ,G.NAME AS GOODNAME FROM T_CART C LEFT JOIN T_USER U ON C.USER_ID = U.ID LEFT JOIN T_GOODS G ON G.ID = C.GOODS_ID WHERE U.ID=#{userId}
+AND G.ID=#{goodsId}) T LEFT JOIN T_IMG I ON T.GOODID = I.GOODS_ID
+	
+	
+	</select>
+	
+	
+	<select id="queryAllCartCount" parameterType="ShopCart" resultType="Integer">
+		SELECT NVL((SELECT SUM(GOODS_NUM) FROM T_CART WHERE USER_ID = #{user.id}),0) FROM DUAL
+	</select>
+	
+</mapper>

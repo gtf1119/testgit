@@ -1,0 +1,6 @@
+$(function() {
+	addfriend.init({
+		renderTo : "#buuscard",
+		dataSource : "getAllUserByPage.action"
+	});
+});

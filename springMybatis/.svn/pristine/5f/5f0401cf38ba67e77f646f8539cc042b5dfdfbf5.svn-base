@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ggg.mapper.CommentMapper">
+	<resultMap type="Comment" id="Comment">
+		<id property="id" column="COMID"/>
+		<result property="content" column="COMCONTENT"/>
+		<result property="comtime" column="COMTIME"/>
+		<association property="user" resultMap="userResult">
+			
+		</association>
+		<association property="goods" resultMap="goodsResult">
+			
+		</association>
+	</resultMap>
+	
+	<resultMap type="User" id="userResult">
+		<id property="id" column="USERID"/>
+		<result property="name" column="USERNAME"/>
+		<result property="userimg" column="USERIMG"/>
+	</resultMap>
+	
+	<resultMap type="Goods" id="goodsResult">
+		<id property="goodsId" column="GOODID"/>
+		<result property="goodsName" column="GOODNAME"/>
+	</resultMap>
+	
+	<select id="queryAllComment" parameterType="GridCondition" resultMap="Comment">
+SELECT T2.COMID,T2.COMCONTENT,T2.COMTIME,T2.USERID,T2.USERNAME,T2.USERIMG,T2.GOODID,T2.GOODNAME FROM
+(SELECT T1.COMID,T1.COMCONTENT,T1.COMTIME,T1.USERID,T1.USERNAME,T1.USERIMG,T1.GOODID,T1.GOODNAME,ROWNUM AS RN FROM 
+(SELECT C.ID AS COMID,C.CONTENT AS COMCONTENT,TO_CHAR(COMTIME,'yyyy-MM-DD hh24:mi:ss') AS COMTIME,U.ID AS USERID,U.NAME AS USERNAME,U.USERIMG AS USERIMG,G.ID AS GOODID,G.NAME AS GOODNAME FROM T_COMMENT C 
+LEFT JOIN T_GOODS G ON G.ID = C.GOOD_ID LEFT JOIN T_USER U ON U.ID = C.USER_ID ${condition} ORDER BY COMTIME DESC) T1) T2
+WHERE T2.RN &gt; (#{pageNum}-1)*#{pageSize} AND T2.RN &lt;= #{pageNum}*#{pageSize}
+	</select>
+	
+	<select id="queryAllCount" parameterType="GridCondition" resultType="Integer">
+		SELECT COUNT(0) FROM (SELECT C.ID AS COMID,C.CONTENT AS COMCONTENT,TO_CHAR(COMTIME,'yyyy-MM-DD hh24:mi:ss') AS COMTIME,U.ID AS USERID,U.NAME AS USERNAME,U.USERIMG AS USERIMG,G.ID AS GOODID,G.NAME AS GOODNAME FROM T_COMMENT C 
+LEFT JOIN T_GOODS G ON G.ID = C.GOOD_ID LEFT JOIN T_USER U ON U.ID = C.USER_ID ${condition} ORDER BY COMTIME) T1
+	
+	</select>
+	
+	<insert id="insertComment" parameterType="Comment">
+		<selectKey keyProperty="id" order="BEFORE" resultType="String">
+			SELECT SYS_GUID() FROM DUAL
+		</selectKey>
+		INSERT INTO T_COMMENT(ID,CONTENT,GOOD_ID,USER_ID) VALUES(#{id},#{content},#{goods.goodsId},#{user.id})
+	</insert>
+	
+</mapper>

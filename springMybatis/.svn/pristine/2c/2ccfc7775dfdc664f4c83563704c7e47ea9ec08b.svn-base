@@ -1,0 +1,251 @@
+var isEdit = false;
+var goodsId = "";
+$(function(){
+	$("#txtGoodsName").focus();
+	select.init({
+		rendTo : "#sltGoodsType",
+		dataSource :"queryGoodType.action",
+		
+		defaultSelected : "-1",
+		defaultItem :[{
+			id : "-1",
+			name : "全部"
+		}],
+		mapping : {
+			key : "id",
+			value : "name"
+		},
+		direction : "up",
+		onclick : function(){
+			var key = $("#sltGoodsType .defaultSelected").attr("key");
+			if(key != "-1"){
+				$("#sltGoodsType").removeClass("txtErr");
+			}
+		},
+		onLoad : function(){
+			edit();
+		}
+	});
+	
+	$(function(){
+		
+		$("input[type='text'],input[type='password'],textarea").focus(function(){
+			hideErr(this);
+		}).blur(function(){
+			checkTxt(this);
+		}).keydown(function(event){
+			if(event.which == 13){
+				$("btnReg").click();
+			}
+		}).keyup(function(){
+			if($(this).val() == ""){
+				$(this).next().removeClass("hidden");
+			}else{
+				$(this).next().addClass("hidden");
+			}
+		});
+		
+		$(".placeholder").click(function(){
+			$(this).prev().focus();
+		});
+		
+		
+		$("#btnAdd").click(function(){
+			var file = $('<input type="file" name="file"></input>').appendTo("form");
+			var btnDel = $('<span class="btnDel">╳</span>').appendTo("form");
+			bindBtnDelClick(file, btnDel);
+		});
+		bindBtnDelClick();
+
+		$("#btnSave").click(function(){
+			var errCount = 0;
+			$("input[type='text'],input[type='password'],textarea").each(function() {
+				errCount += checkTxt(this);
+			});
+			
+			var goodsTypeId = $("#sltGoodsType .defaultSelected").attr("key");
+			
+			if(goodsTypeId == "-1"){
+				errCount++;
+				// 增加红色边框
+				$("#sltGoodsType").addClass("txtErr");
+			}else{
+				$("#sltGoodsType").removeClass("txtErr");
+			}
+		
+			$("input[type='file']").each(function(i,t){
+				if ($(this).val() == "") {
+					errCount++;
+					$(this).addClass("red");
+				} else {
+					$(this).removeClass("red");
+					$("<img class='goodsImg' src='upload/"+ t.fileName +"'>").appendTo("#imgList");
+				}
+			});
+			
+			if (errCount > 0) {
+				return;// 退出方法
+			}
+			
+			
+				$("form").submit();
+				
+			
+			
+	
+		});
+			
+	});
+	
+	
+
+
+	function checkTxt(objTxt){
+		var textStr = $(objTxt).val();
+		var errTips = $(objTxt).next();
+
+		var isHasErr = false;
+		
+		var getErrMsg = function(){
+			var msgTxt = $(objTxt).prev().text();
+			if($.trim(textStr)==""){
+				isHasErr = true;
+				return "不能为空";
+			}
+			if($.trim(textStr).length<parseInt($(objTxt).attr("minlength"))){
+				isHasErr = true;
+				return "长度太短";
+			}
+			if(!util.string.validate(textStr,$(objTxt).attr("validate"))){
+				isHasErr = true;
+				return "不能含有违规字符";
+			}
+			var p1 = $("#txtPwd").val();
+			var p2 = $("#txtRePwd").val();
+			if($(objTxt).attr("id")=="txtRePwd" && p1.length>0 && !$("#txtPwd").hasClass("txtErr") && p1 != p2 ){
+				isHasErr = true;
+				return "密码必须一致";
+			}
+			
+		};
+		var errMsg = getErrMsg();
+		return isHasErr?showErr(objTxt,errMsg):hideErr(objTxt,errMsg);
+		
+	};
+
+	//显示错误信息
+	function showErr(objTxt,errMsg,txtClass,errTipClass){
+		txtClass = txtClass == null ? "txtErr" : txtClass;
+		errTipClass = errTipClass == null ? "showErrTips" : errTipClass;
+		
+		$(objTxt).addClass(txtClass);
+		var errTipObj = $(objTxt).next().next();
+		$(errTipObj).text(errMsg);
+		if (util.isLTIE10()) {
+			// 使用jq实现动画
+			$(errTipObj).animate({
+				opacity : "1",
+				marginRight : "30px"
+			}, "fast");
+		} else {
+			// 给错误提示文字加上显示的样式，同时修改内部文字为errMsg
+			$(errTipObj).addClass(errTipClass);
+		}
+		return 1;
+	};
+
+	//隐藏错误信息
+	function hideErr(objTxt,errMsg,txtClass,errTipClass){
+		txtClass = txtClass == null ? "txtErr" : txtClass;
+		errTipClass = errTipClass == null ? "showErrTips" : errTipClass;
+		var errTipObj = $(objTxt).next().next();
+		$(objTxt).removeClass(txtClass);
+		if (util.isLTIE10()) {
+			// 使用jq实现动画
+			$(errTipObj).animate({
+				opacity : "0",
+				marginRight : "10px"
+			}, "fast");
+		} else {
+			// 隐藏错误提示文字
+			$(errTipObj).removeClass(errTipClass);
+		}
+		return 0;
+	};
+
+
+});
+
+function postGoodsInfo(allImgFileNameStr){
+	if(isEdit){
+		var fileNameArr = [];
+		$(".goodsImg").each(function(i,t){
+			fileNameArr.push($(t).attr("filename"));
+		});
+		allImgFileNameStr = fileNameArr.join(",")  + allImgFileNameStr;
+	}
+	$.post(isEdit ? "updateGoods.action" : "addGoods.action",{
+		goodsId : goodsId,
+		goodsName : $("#txtGoodsName").val(),// 商品名称
+		goodsPrice : $("#txtGoodsPrice").val(),// 商品价格
+		goodsNum : $("#txtGoodsNum").val(),// 商品库存
+		goodsSales : $("#txtGoodsSales").val(),// 商品销量
+		goodsDes : $("#txtGoodsDes").val(),// 商品描述
+		goodsTypeID : $("#sltGoodsType .defaultSelected").attr("key"),
+		goodsImg : allImgFileNameStr
+	},function(json){
+		if(json.isSuccess == "true"){
+			top.window.frames["ifra"].contentWindow.grid.reload("#myGrid",1);
+			top.dialog.hide();
+		}else{
+			alert("失败");
+		}
+	});
+}
+
+
+function bindBtnDelClick(file, btnDel) {
+	if (!file)
+		file = $("input[type='file']");
+	if (!btnDel)
+		btnDel = $(".btnDel");
+	$(btnDel).click(function() {
+		$(this).prev().remove();
+		$(this).remove();
+	});
+	$(file).change(function() {
+		if ($(this).val() == "") {
+			$(this).addClass("red");
+		} else {
+			$(this).removeClass("red");
+		}
+	});
+}
+
+function edit(){
+	if(top.editObj != null){
+		var e = top.editObj;
+		top.editObj = null;
+		$(".placeholder").each(function(){
+			$(this).css("display","none");
+		});
+		$("#txtGoodsName").val(e.goodsName);// 商品名称
+		$("#txtGoodsPrice").val(e.goodsPrice);// 商品价格
+		$("#txtGoodsNum").val(e.goodsNum);// 商品库存
+		$("#txtGoodsSales").val(e.goodsSales);// 商品销量
+		$("#txtGoodsDes").val(e.goodsDes);// 商品描述
+		select.selectedGender("#sltGoodsType", $("#sltGoodsType .gender[key='" + e.typeId + "']"));
+		goodsId = e.goodsId;
+		isEdit = true;
+		$(e.goodsImgList.split(",")).each(function(i, t) {
+			var imgContainer = $("<div class='imgContainer'></div>").appendTo("#imgList");
+			$('<img class="goodsImg" filename="' + t + '" src="' + "upload/" + t + '" alt="商品图片"/>').appendTo(imgContainer);
+			var btnImgDel = $("<div class='btnImgDel' title='点击删除商品图片'>删除</div>").appendTo(imgContainer);
+			$(btnImgDel).click(function(){
+				$(this).parent().remove();
+			});
+			
+			
+		});
+	}
+}

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ggg.mapper.GoodsTypeMapper">
+	<resultMap type="GoodType" id="GoodType">
+		<id property="id" column="ID"/>
+		<result property="name" column="NAME"/>
+		<result property="createtime" column="CREATETIME"/>
+		<collection property="ttlist" ofType="TypeTitle">
+			<id property="ttid" column="TTID"></id>
+			<result property="ttname" column="TTNAME"/>
+			<result property="typeid" column="TYPE_ID"/>
+			<collection property="tglist" ofType="TypeGoods">
+				<id property="tgid" column="TGID"></id>
+				<result property="tdname" column="TGNAME"/>
+				<result property="ttid" column="TYPETITLE_ID"/>
+				<result property="ishighlight" column="ISHIGHLIGHT"/>
+			</collection>
+		</collection>
+	</resultMap>
+	
+	<select id="queryGoodTye" resultMap="GoodType">
+		SELECT ID,NAME,CREATETIME FROM T_TYPE
+	</select>
+	
+
+	<select id="queryGoodTypeByPage" parameterType="GridCondition" resultMap="GoodType">
+		SELECT T1.ID,T1.NAME,T1.CREATETIME FROM
+		(SELECT T.ID,T.NAME,T.CREATETIME,ROWNUM AS RN FROM 
+		(SELECT ID,NAME,TO_CHAR(CREATETIME,'yyyy-MM-DD HH24:mi:ss') AS CREATETIME FROM 
+		T_TYPE ${condition} ORDER BY CREATETIME DESC) T) T1 WHERE T1.RN &gt;(#{pageNum}-1)*#{pageSize} 
+		AND T1.RN &lt;=#{pageNum}*#{pageSize}
+	</select>
+	
+	<select id="queryTypeCount" parameterType="GridCondition" resultType="int">
+		SELECT COUNT(*) FROM (SELECT * FROM T_TYPE ${condition}) T
+	</select>
+	
+	<select id="queryTypeInMenu" resultMap="GoodType">
+		SELECT T2.ID,T2.NAME,T2.TTID,T2.TTNAME,TG.ID AS TGID,TG.NAME AS TGNAME,TG.ISHIGHLIGHT FROM
+(SELECT T.ID,T.NAME,TT.ID AS TTID,TT.NAME AS TTNAME FROM T_TYPE T LEFT JOIN TYPETITLE TT ON TT.TYPE_ID = T.ID) T2 LEFT JOIN TYPEGOODS TG ON TG.TYPETITLE_ID = T2.TTID
+	</select>
+	
+
+	<insert id="insertType" parameterType="GoodType">
+		INSERT INTO T_TYPE(ID,NAME) VALUES(SYS_GUID(),#{name})
+	</insert>
+	
+	<update id="updateType" parameterType="GoodType">
+		UPDATE T_TYPE SET NAME = #{name} WHERE ID=#{id}
+	</update>
+	
+	<delete id="delete" parameterType="String">
+		DELETE FROM T_TYPE WHERE ID=#{id}
+	</delete>
+
+</mapper>

@@ -1,0 +1,100 @@
+.grid {
+	width: 100%;
+	border-left: 1px solid #e0e0e0;
+	border-top: 2px solid #148ffd;
+}
+
+/*表头背景色*/
+.grid>thead>th {
+	background-color: #f6fbff;
+	color: #333;
+	
+}
+
+/*表格行hover效果*/
+.grid>tbody>tr:hover {
+	background-color: #f3f3f3;
+}
+
+/*表格单元格*/
+.grdiTD {
+	border-right: 1px solid #e0e0e0;
+	border-bottom: 1px solid #e0e0e0;
+	padding: 6px 15px;
+}
+
+/*表格行选中效果*/
+.gridSelected {
+	background-color: #e6e5e5 !important;
+}
+
+/*内部元素靠右对齐*/
+.alignright {
+	text-align: right;
+}
+
+/*内部元素居中对齐*/
+.aligncenter {
+	text-align: center;
+}
+
+.pager {
+	border: 1px solid #e0e0e0;
+	border-top-width: 0;
+	padding: 6px;
+	background-color: while;
+	color: #464646;
+}
+
+.pagerTable {
+	width: 100%;
+	font-size: 14px;
+}
+
+/*分页栏下拉菜单*/
+.pager .sltPageSize {
+	width: 70px;
+}
+
+/*下拉菜单边框*/
+.pager .ddl {
+	border: 1px solid #bdbdbd;
+}
+
+/*下拉菜单弹出部分的边框*/
+.pager .ddlList {
+	border: 1px solid #bdbdbd;
+	left: -1px;
+}
+
+/*下拉菜单显示的文字*/
+.pager .ddlTxt {
+	padding: 1px 30px 1px 10px;
+}
+
+/*下拉菜单小箭头*/
+.pager .ddlArrow {
+	top: 7px;
+}
+
+/*下拉菜单选项*/
+.pager .ddlItem {
+	padding: 2px 10px;
+}
+
+/*分页栏按钮*/
+.pagerBtn {
+	padding: 2px 10px;
+	cursor: pointer;
+	margin: 0 5px;
+	border: 1px solid #F2F8FC;
+	user-select: none;
+	text-align: center;
+}
+
+.pagerBtn:hover {
+	background-color: #ceeafd;
+	color: #0f709c;
+	border: 1px solid #0f709a;
+}
+

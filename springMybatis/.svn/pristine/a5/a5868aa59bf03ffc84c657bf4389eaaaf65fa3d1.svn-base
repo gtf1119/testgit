@@ -1,0 +1,200 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ include file="../common/privateHome.jsp"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<base href="<%=basePath%>">
+
+<title>欢迎光临</title>
+<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0"/>
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="This is my page">
+<!--
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	-->
+<link rel="stylesheet" href="css/font-awesome.min.css" type="text/css"></link>
+<link rel="stylesheet" href="css/taobao/ownCenter.css" type="text/css"></link>
+
+<link rel="stylesheet" href="css/taobao/taobao.css" type="text/css"></link>
+
+<link rel="stylesheet" href="css/taobao/home.css" type="text/css"></link>
+<link rel="stylesheet" href="css/common/common1.css" type="text/css"></link>
+<script type="text/javascript" src="js/jquery-1.8.3.js"></script>
+
+
+<script type="text/javascript" src="js/common/util.js"></script>
+
+<script type="text/javascript" src="js/taobao/shopCartNum.js"></script>
+<script type="text/javascript" src="js/taobao/common/exit.js"></script>
+<script type="text/javascript" src="js/taobao/ownCenter.js"></script>
+</head>
+<body>
+	<div id="container">
+		<div id="top_nav">
+			<div id="navbg">
+				<p id="loginInfo">
+					<a href="<%=basePath %>/html/taobao/home.jsp">嗨，欢迎光临 </a>
+					<c:choose>
+						<c:when test="${user!=null}">
+							<a id="login" class="a_link" href="javascript:void(0);"><%=userName %></a>
+							<div class="userid hidden"><%=userId %></div>
+						</c:when>
+						<c:when test="${user == null}">
+							<a id="login" class="a_link" href="<%=basePath%>/html/loginShop.jsp">请登录</a>
+						</c:when>
+					</c:choose>
+					
+					
+					
+					 <a id="regist"
+						class="a_link" href="<%=basePath%>/html/loginShop.jsp">免费注册</a>
+					 <a href="javascript:void(0);" id="exit">退出</a>
+				</p>
+				<ul id="navListInfo">
+					<li><a href="">我的信息</a>
+					</li>
+					
+					</li>
+					<li><a href="<%=basePath%>/html/taobao/shopCart.jsp">购物车<span class="cartNum"></span></a>
+					</li>
+					<li><a href="<%=basePath%>/html/taobao/order.jsp">我的订单</a>
+					
+					
+
+				</ul>
+			</div>
+		</div>
+
+
+		<div id="content">
+			<div class="ownInfo">
+				<div class="bgImg"></div>
+				<div class="infoBar">
+					<div class="infoMain">
+						<div class="userImgIcon"></div>
+						<div class="userImgMask hidden"></div>
+						<div class="infoContent ic_1">
+							<div class="infoTop">
+								<h1>
+									<span class="infoName"></span>
+									
+								</h1>
+							</div>
+							<span class="infoSex infospan"></span>
+							<span class="infoLoginName infospan"></span>
+							<div class="infoBot">
+								<input type="button" value="修改个人资料" id="btnEdit"/>
+							</div>
+						</div>
+						<div class="infoContent ic_2 hidden">
+							<span class="returnTo" >返回我的主页</span>
+							<div class="infoTop">
+								<h1>
+									<span class="infoName"></span>
+									
+								</h1>
+							</div>
+							<div class="fields">
+								<div class="fieldItem">
+									<h3 class="field_title">昵称</h3>
+									<div class="field_content">
+										<span class="nametxt">未知</span>
+										
+										<i class="fa fa-pencil edit hidden" aria-hidden="true">修改</i>
+										
+										
+									</div>
+									<div class="editContent hidden">
+										<div class="txtDiv"><input type="text" class="txtEdit txtLoginName"/></div>
+										<div class="btnDiv">
+											<input type="button" value="保存" class="btnSave"/>
+											<input type="button" value="取消" class="btnCancel"/>
+										</div>
+								
+									</div>
+								</div>
+								<div class="fieldItem">
+									<h3 class="field_title">性别</h3>
+									<div class="field_content">
+										<span class="sextxt">未知</span>
+										
+										<i class="fa fa-pencil edit hidden sexedit" aria-hidden="true">修改</i>
+									</div>
+									<div class="editContent hidden">
+										<div class="txtDiv">
+											<label id="lblSex1" class="lbl">
+												<input type="radio" name="sex" id="sex1" value="男"/>男
+											</label>
+											<label id="lblSex2" class="lbl">
+												<input type="radio" name="sex" id="sex2" value="女"/>女
+											</label>
+											
+										</div>
+										<div class="btnDiv">
+											<input type="button" value="保存" class="btnSave"/>
+											<input type="button" value="取消" class="btnCancel"/>
+										</div>
+								
+									</div>
+								</div>
+								<div class="fieldItem">
+									<h3 class="field_title">金额</h3>
+									<div class="field_content">
+										<span class="moneytxt">未知</span>
+										
+										
+										
+									</div>
+								</div>
+								<div class="fieldItem">
+									<h3 class="field_title">密码</h3>
+									<div class="field_content">
+										<span class="pwdtxt">未知</span>
+										
+										<i class="fa fa-pencil edit hidden" aria-hidden="true">修改</i>
+										
+										
+									</div>
+									<div class="editContent hidden">
+										<div class="txtDiv"><input type="text" class="txtEdit txtPwd"/></div>
+										<div class="btnDiv">
+											<input type="button" value="保存" class="btnSave"/>
+											<input type="button" value="取消" class="btnCancel"/>
+										</div>
+								
+									</div>
+								</div>
+								
+							
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+
+		</div>
+
+
+		<div id="footer"></div>
+		<div id="toTop" class="hidden">
+			<i class="iconfont totop">&#xe663;</i>
+			<div class="topdiv">顶部</div>
+		</div>
+	</div>
+
+
+
+
+
+
+</body>
+</html>

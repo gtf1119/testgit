@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ggg.mapper.GoodListMapper">
+	<resultMap type="GoodList" id="GoodList">
+		<id property="id" column="ID"/>
+		<result property="image" column="IMAGE"/>
+		<result property="price" column="PRICE"/>
+		<result property="salenum" column="SALENUM"/>
+		<result property="title" column="TITLE"/>
+		<result property="shop" column="SHOP"/>
+		<result property="address" column="ADDRESS"/>
+	</resultMap>
+
+	<select id="queryGoodList" parameterType="GridCondition" resultMap="GoodList">
+		SELECT T2.ID,T2.IMAGE,T2.PRICE,T2.SALENUM,T2.TITLE,T2.SHOP,T2.ADDRESS FROM
+		(SELECT T1.ID,T1.IMAGE,T1.PRICE,T1.SALENUM,T1.TITLE,T1.SHOP,T1.ADDRESS,ROWNUM AS RN FROM
+		(SELECT ID,IMAGE,PRICE,SALENUM,TITLE,SHOP,ADDRESS FROM T_GOODLIST E ${condition})T1)T2
+		WHERE T2.RN &gt; (#{pageNum}-1)*#{pageSize} AND T2.RN &lt;= #{pageNum}*#{pageSize}
+	
+	</select>
+	
+	<select id="queryAllCount" parameterType="GridCondition" resultType="int">
+		SELECT COUNT(0) FROM (SELECT * FROM T_GOODLIST E ${condition})
+	
+	</select>
+	
+</mapper>

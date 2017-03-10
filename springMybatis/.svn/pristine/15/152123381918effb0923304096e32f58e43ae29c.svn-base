@@ -1,0 +1,192 @@
+var goodsList = {
+	init : function(args){
+		if(args.ajaxData == null){
+			args.ajaxData = {
+				pageNum:1,
+				pageSize:10
+			};
+		}else{
+			if(args.ajaxData.pageNum == null){
+				args.ajaxData.pageNum = 1;
+			}
+			if(args.ajaxData.pageSize == null){
+				args.ajaxData.pageSize = 10;
+			}
+		}
+		
+		$(args.rendTo).data("args", args);
+		goodsList.getDataSource(args);
+	},
+	reload : function(rendTo, pageNum, pageSize){
+//		$(rendTo).html("");
+		var args = $(rendTo).data("args");
+		args.ajaxData.pageNum = pageNum;
+		args.ajaxData.pageSize = pageSize;
+		goodsList.init(args);
+	},
+	getDataSource: function(args){
+		if(typeof args.dataSource == "string"){
+			$.ajax({
+				url:args.dataSource,
+				type:"POST",
+				dataType : "text",
+				data:args.ajaxData,
+				success:function(json){
+					var obj = eval("("+json+")");
+					args.data = obj;
+					goodsList.build(args);
+				}
+			});
+		}else{
+			args.data = args.dataSource;
+			goodsList.build(args);
+		}
+	},
+	build : function(args){
+		$(args.rendTo).html("");
+		$(args.data.rows).each(function(i,g){
+			
+			var goodItem = $("<div class='goodItem' goodsId='"+g.goodsId+"'></div>").appendTo($(args.rendTo));
+			
+			var top =$("<div class='top'></div>").appendTo(goodItem);
+			var goodMsg = $("<div class='goodMsg'></div>").appendTo(goodItem);
+			
+			var picCon = $("<div class='picCon'></div>").appendTo(top);
+			var similiar = $("<div class='similiar hidden'></div>").appendTo(top);
+			
+			var picCon_a = $("<a class='pic_a' href='javascript:void(0);'></a>").appendTo(picCon);
+			$("<img class='goodsImg' src='upload/"+g.goodsImgList[0].filename+"' alt='' />").appendTo(picCon_a);
+			
+			$("<a class='btn btn1' href='javascript:void(0);'><span>找同款</span></a>").appendTo(similiar);
+			$("<a class='btn btn2' href='javascript:void(0);'><span>找同款</span></a>").appendTo(similiar);
+			
+			var row1 = $("<div class='row row1'></div>").appendTo(goodMsg);
+			var row2 = $("<div class='row row2'></div>").appendTo(goodMsg);
+			var row3 = $("<div class='row row3'></div>").appendTo(goodMsg);
+			var row4 = $("<div class='row row4'></div>").appendTo(goodMsg);
+			
+			var rowmsg1 =  $("<div class='ship rowmsg1'></div>").appendTo(row1);
+			var rowmsg2 =  $("<div class='ship rowmsg2'></div>").appendTo(row1);
+			var rowmsg3 =  $("<div class='ship rowmsg3'>"+g.goodsSales+"人付款</div>").appendTo(row1);
+			
+			$("<span>¥</span><span class='price'>"+g.goodsPrice+"</span>").appendTo(rowmsg1);
+			
+			
+			$("<a class='goodsname_a' href='javascript:void(0);'>"+g.goodsName+" </a>").appendTo(row2);
+			
+			var drs = $("<span class='drs'></span>").appendTo(row3);
+			$("<span class='dr'></span><span class='dr'></span><span class='dr'></span>").appendTo(drs);
+			
+			$("<a href='javascript:void(0);'><span class='shop'>"+g.userName+"</span></a><div class='address'></div>").appendTo(row3);
+			
+			var serviceIcon_left = $("<div class='serviceIcon_left'></div>").appendTo(row4);
+			var serviceIcon_right = $("<div class='serviceIcon_right'></div>").appendTo(row4);
+			
+			var serviceListItem= $("<ul class='serviceListItem'></ul>").appendTo(serviceIcon_left);
+			
+			
+			//小图标
+			$(g.icon).each(function(i2,icon){
+				$("<li class='serviceList'><a href='javascript:void(0);'><span class='"+icon+"'></span></a></li>").appendTo(serviceListItem);
+			});
+		
+			$("<a href='javascript:void(0);' title='点此可以直接和卖家交流选好的宝贝，或相互交流网购体验，还支持语音视频噢。'>" +
+					"<span class='serviceIcon_ww'></span></a>").appendTo(serviceIcon_right);
+			
+			
+		});
+		
+		$("<div style='clear:both'><div>").appendTo(args.rendTo);
+		var html = "";
+		
+		var page = $("<div class='page'></div>").appendTo(args.rendTo);
+		var pageTable = $("<table class='pageTable' cellpadding='0' cellspacing='0'>").appendTo(
+				page);
+		var pageTr = $("<tr></tr>").appendTo(pageTable);
+		var html = "";
+		html += "<td style='width: 140px;'>共<span class='total'>"+args.data.total+"</span>项,每页显示</td>";
+		html += "<td style='width: 80px;'><div class='sltSize'></div></td>";
+		html += "<td style='padding:0 18px'>项</td>";
+		html += "<td style='width: 80px;'><div class='btnPrev pageBtn'>上一页</div></td>";
+		html += "<td style='width: 40px;'><span class='currentPage'>"+args.ajaxData.pageNum+"</span>/" +
+				"<span class='totalPage'>"+Math.ceil(args.data.total/args.ajaxData.pageSize)+"</span></td>";
+		html += "<td style='width: 80px;'><div class='btnNext pageBtn'>下一页</div></td>";
+
+		$(pageTr).html(html);
+		
+		goodsList.eventBind(args);
+	},
+	eventBind:function(args){
+		var rendTo =$(args.rendTo);
+		$(".goodItem",rendTo).on("mouseenter",".top",function(){
+			$(this).children(".similiar").removeClass("hidden");
+		});
+		
+		$(".goodItem",rendTo).on("mouseleave",".top",function(){
+			$(this).children(".similiar").addClass("hidden");
+		});
+		
+		//生成下拉菜单
+		select.init({
+			rendTo : args.rendTo + " .sltSize",
+			dataSource : [{
+				key:"10",
+				value:"10"
+			},{
+				key:"20",
+				value:"20"
+			},{
+				key:"30",
+				value:"30"
+			},{
+				key:"40",
+				value:"40"
+			},{
+				key:"50",
+				value:"50"
+			}],
+			defaultSelected : args.ajaxData.pageSize,
+			offset:"-2",
+			direction:"up",
+			onclick : function(){
+				
+				goodsList.reload(rendTo, 1, $(".page .defaultSelected",rendTo).attr("key"));
+			}
+		});
+		
+		$(".btnPrev", rendTo).click(function() {
+			var currentPage = +$(".currentPage", rendTo).text();
+			currentPage = (currentPage - 1) < 1 ? 1 : currentPage - 1;
+			$(".currentPage", rendTo).text(currentPage);
+			goodsList.reload(rendTo, currentPage, $(".page .defaultSelected",rendTo).attr("key"));
+		});
+
+		$(".btnNext", rendTo).click(function() {
+			var currentPage = +$(".currentPage", rendTo).text();
+			var maxPage = +$(".totalPage", rendTo).text();
+			currentPage = (currentPage + 1) > maxPage ? maxPage : currentPage + 1;
+			$(".currentPage", rendTo).text(currentPage);
+			goodsList.reload(rendTo, currentPage, $(".page .defaultSelected",rendTo).attr("key"));
+		});
+		
+		
+		var num = $(".goodItem").length;
+		
+		
+			for(var i=0;i<=parseInt(num/5);i++){
+				$(".goodItem").eq((i*5)-1).css({
+					marginRight:0
+				});
+			}
+		
+
+		$(".goodItem").each(function(){
+			var goodsId = $(this).attr("goodsId");
+			$(".pic_a,.goodsname_a",$(this)).click(function(){
+				location.href = "html/taobao/goodDes.jsp?goodsid="+goodsId;
+			});
+		});
+			
+	}
+	
+};

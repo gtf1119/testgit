@@ -1,0 +1,111 @@
+body,ul,li{
+	margin:0;
+	padding:0;
+	list-style:none;
+
+}
+
+.sliderCon{
+	width:440px;
+	height:220px;
+	position:relative;
+	overflow:hidden;
+	border-radius:4px;
+}
+
+.slider{
+	width:100%;
+	height:100%;
+	position:relative;
+	overflow:hidden;
+}
+
+.sliderUl{
+	width:500%;
+	margin-left:0%;
+	overflow:hidden;
+	transition: all 500ms;
+	line-height: 0;
+    font-size: 0;
+}
+
+.picLi{
+	float:left;
+	line-height: 0;
+    font-size: 0;
+}
+
+.sBottom{
+    width: 100%;
+    height: 35px;
+	background:url(../../image/slider/bottomBg.png) repeat-x;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.focusUl{
+    height: 100%;
+    width: 152px;
+    position: absolute;
+    right: 5px;
+    	line-height: 0;
+    font-size: 0;
+}
+
+.focusLi{
+    float: left;
+    width: 18px;
+    height: 18px;
+  
+  	border-radius:45%;
+    margin: 9px 5px;
+    	line-height: 0;
+    font-size: 0;
+    background:rgba(242, 242, 242, 0.36);
+
+}
+
+.focusLi:hover{
+    background: #ec6a3a;
+}
+
+.on{
+	background:white;
+}
+
+
+.prev {
+    width: 32px;
+    height: 32px;
+    color: white;
+    position: absolute;
+    top: 91px;
+    line-height: 31px;
+    font-size: 20px;
+    text-align: center;
+    background: rgba(0,0,0,.3);
+    font-weight: bold;
+}
+
+.next{
+    width: 32px;
+    height: 32px;
+    color: white;
+    position: absolute;
+    top: 91px;
+    line-height: 31px;
+    font-size: 20px;
+    text-align: center;
+    background: rgba(0,0,0,.3);
+    font-weight: bold;
+    right:0;
+}
+
+.prev:hover,.next:hover{
+	 background: rgba(0,0,0,.6);
+}
+.hidden{
+	display:none;
+}
+

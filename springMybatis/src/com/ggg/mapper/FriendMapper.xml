@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ggg.mapper.FriendMapper">
+	<resultMap type="Friend" id="Friend">
+		<id property="id" column="ID" />
+		<result property="myId" column="MYID" />
+		<result property="friendId" column="FRIENDID" />
+		<association property="user" javaType="User">
+			<id property="id" column="USERID" />
+			<result property="name" column="USERNAME" />
+			<result property="sex" column="USERSEX" />
+			<result property="userimg" column="USERIMG" />
+			<result property="loginname" column="USERLOGINNAME" />
+			<result property="autoGraph" column="USERAUTOGRAPH" />
+		</association>
+	</resultMap>
+	<insert id="add" parameterType="Friend">
+		<selectKey keyProperty="id" order="BEFORE" resultType="String">
+			SELECT SYS_GUID() FROM DUAL
+		</selectKey>
+		INSERT INTO FRIEND(ID,MYID,FRIENDID)VALUES(#{id},#{myId},#{friendId})
+	</insert>
+	<select id="queryFriendById" parameterType="GridCondition" resultMap="Friend">
+SELECT F.ID AS ID,F.MYID,F.FRIENDID,U.ID AS USERID,U.LOGINNAME AS USERLOGINNAME,U.NAME AS USERNAME,U.SEX AS USERSEX,U.USERIMG AS USERIMG,U.AUTOGRAPH AS USERAUTOGRAPH FROM FRIEND F LEFT JOIN T_USER U ON F.FRIENDID = U.ID ${condition}
+	</select>
+	<delete id="deleteFriend" parameterType="Friend">
+	 DELETE FROM FRIEND WHERE MYID=#{myId} AND FRIENDID =#{friendId}
+	</delete>
+</mapper>

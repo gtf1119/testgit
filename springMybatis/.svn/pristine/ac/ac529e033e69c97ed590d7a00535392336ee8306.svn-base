@@ -1,0 +1,121 @@
+$(function(){
+	var index = 1;
+	var time;
+	var animated = true;
+	
+	var prev = $(".prev");
+	var next = $(".next");
+	var focusLi = $(".focusLi");
+	var slider = $(".slider");
+	function animateTo(offset){
+		var sliderUlMargin = parseInt($(".sliderUl").css("marginLeft"))/$(".slidImg").eq(0).width()*100;
+		var newLeft = sliderUlMargin + offset;
+		sliderUlMargin = newLeft + "%";
+		$(".sliderUl").animate({
+			marginLeft : sliderUlMargin
+		},"fast");
+		if(newLeft < -400){
+			$(".sliderUl").animate({
+				marginLeft : "0%"
+			},"fast");
+		}
+		if(newLeft > 0){
+			$(".sliderUl").animate({
+				marginLeft : "-400%"
+			},"fast");
+		}
+	}
+	
+	prev.onclick = function(){
+		stop();
+		if(index == 1){
+			index = 5;
+		}else{
+			index -= 1;
+		}
+		animateTo(100);
+		showButton();
+		play();
+	};
+
+	next.onclick = function(){
+		stop();
+		if(index == 5){
+			index = 1;
+		}else{
+			index += 1;
+		}
+		
+		animateTo(-100);
+		showButton();
+		play();
+	};
+	
+	function showButton(){
+		for(var i=0;i<focusLi.length;i++){
+			if(focusLi[i].className == "focusLi on"){
+				focusLi[i].className = "focusLi";
+				break;
+			}
+		}
+		focusLi[index-1].className = "focusLi on";
+
+		
+	}
+	
+	for(var i=0;i<focusLi.length;i++){
+		
+		focusLi[i].onclick = function(){
+			if(this.className=="focusLi on"){
+				return;
+			}
+			stop();
+			var myIndex = parseInt(this.getAttribute("index"));
+			var offset = -100*(myIndex-index);
+			
+			animateTo(offset);
+			index = myIndex;
+			showButton();
+			
+			play();
+		
+		};
+	}
+	
+	
+
+	function play() {
+
+		time = setInterval(function() {
+
+			next.onclick();
+
+		}, 3000);
+
+	}
+
+	function stop() {
+		clearInterval(time);
+	}
+
+	slider.onmouseout = play;
+	slider.onmouseover = stop;
+	play();
+	
+	$(window).resize(function(){
+		updateSize();
+	});
+	
+});
+
+function updateSize(){
+	if($(window).width() <= 900){
+		var h = 500/1180*$(window).width()
+		$(".slidImg").css("width",$(window).width()+"px");
+		$(".sliderCon").css("height",h+"px");
+	}else{
+		$(".slidImg").css("width","1180px");
+		$(".sliderCon").css("height","500px");
+	}
+	
+}

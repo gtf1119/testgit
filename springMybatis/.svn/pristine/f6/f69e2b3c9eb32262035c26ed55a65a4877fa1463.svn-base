@@ -1,0 +1,15 @@
+package com.ggg.mapper;
+
+
+import java.io.File;
+import java.util.List;
+
+import com.ggg.pojo.GridCondition;
+
+
+public interface FileMapper {
+
+public List<File> queryAll(GridCondition condition) throws Exception;
+	
+	public int queryAllCount(GridCondition condition) throws Exception;
+}

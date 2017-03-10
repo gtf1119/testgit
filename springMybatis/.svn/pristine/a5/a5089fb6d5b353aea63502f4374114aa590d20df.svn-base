@@ -1,0 +1,93 @@
+package com.ggg.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ggg.exception.SysException;
+import com.ggg.mapper.GoodsMapper;
+import com.ggg.pojo.Goods;
+import com.ggg.pojo.GridCondition;
+import com.ggg.service.GoodsService;
+
+@Service
+public class GoodsServiceImpl implements GoodsService {
+	
+	@Autowired
+	private GoodsMapper goodsMapper;
+	
+
+	public List<Goods> queryGoods(GridCondition condition) throws Exception {
+		List<Goods> goodsList = null;
+	
+			goodsList = goodsMapper.queryGoods(condition);
+		
+		
+		return goodsList;
+	}
+
+	public int queryCount(GridCondition condition) throws Exception {
+		int total = 0;
+		try {
+			total = goodsMapper.queryCount(condition);
+		} catch (Exception e) {
+			throw new SysException("查询商品总数失败");
+		}
+		
+		return total;
+	}
+
+	public String addGoods(Goods goods) throws Exception {
+		
+		try {
+			goodsMapper.insert(goods);
+		} catch (Exception e) {
+			throw new SysException("添加商品失败");
+		}
+		
+		return goods.getGoodsId();
+	}
+
+	public int update(Goods goods) throws Exception {
+		int count = 0;
+		try {
+			count = goodsMapper.update(goods);
+		} catch (Exception e) {
+			throw new SysException("修改商品信息失败");
+		}
+		
+		return count;
+	}
+
+	public int delete(String id) throws Exception {
+		int count = 0;
+		try {
+			count = goodsMapper.delete(id);
+		} catch (Exception e) {
+			throw new SysException("删除商品失败");
+		}
+		return count;
+	}
+
+	public Goods queryByGoodsId(GridCondition condition) throws Exception {
+		Goods good = goodsMapper.queryByGoodsId(condition);
+		return good;
+	}
+
+	public void updateSaleAndNum(Goods goods) throws Exception {
+		goodsMapper.updateSaleAndNum(goods);
+		
+	}
+
+	public Goods queryById(String id) throws Exception {
+		Goods goods = goodsMapper.queryById(id);
+		return goods;
+	}
+
+	public List<Goods> queryHotSale() throws Exception {
+		List<Goods> goodsList = goodsMapper.queryHotSale();
+		return goodsList;
+	}
+
+}

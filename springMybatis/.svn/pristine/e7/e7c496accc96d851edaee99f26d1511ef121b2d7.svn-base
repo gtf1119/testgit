@@ -1,0 +1,52 @@
+{
+			total : 200,
+			row : [{	'id':'001','name' : '小明',
+				'age' : 18,
+				'password' : '123',
+				'sex' : '男',
+			},
+			{
+				'name' : '小红',
+				'age' : 17,
+				'password' : '345',
+				'sex' : '女',
+			},
+			{
+				'name' : '小王',
+				'age' : 20,
+				'password' : '789',
+				'sex' : '男',
+			},{	'name' : '小明',
+				'age' : 18,
+				'password' : '123',
+				'sex' : '男',
+			},
+			{
+				'name' : '小红',
+				'age' : 17,
+				'password' : '345',
+				'sex' : '女',
+			},
+			{
+				'name' : '小王',
+				'age' : 20,
+				'password' : '789',
+				'sex' : '男',
+			},{	'name' : '小明',
+				'age' : 18,
+				'password' : '123',
+				'sex' : '男',
+			},
+			{
+				'name' : '小红',
+				'age' : 17,
+				'password' : '345',
+				'sex' : '女',
+			},
+			{
+				'name' : '小王',
+				'age' : 20,
+				'password' : '789',
+				'sex' : '男',
+			}]
+		}

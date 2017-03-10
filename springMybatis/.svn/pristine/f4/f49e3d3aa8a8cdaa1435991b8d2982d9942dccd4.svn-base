@@ -1,0 +1,85 @@
+#dialog{
+
+    border: 1px solid #035aa9;
+	position:absolute;
+	top:50%;
+	left:50%;
+	z-index:5;
+}
+
+#titleBar{
+    background-color: #3e94e1;
+}
+#titleText{
+	color: white;
+    padding: 8px 15px;
+    user-select:none;
+}
+#dialogIframe {
+	width:100%;
+	height:100%;
+	background:white;
+}
+
+#btnClose{
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    width: 23px;
+    border: 1px solid #036bca;
+    text-align: center;
+    color: white;
+    user-select:none;
+    cursor:pointer;
+}
+
+#btnClose:hover{
+    background: #52a6f1;
+}
+
+#btnClose:active{
+	background: #0f7ee2;
+}
+
+
+/*弹出层样式*/
+#dialogMask{
+	position:absolute;
+	top:0;
+	left:0;
+	background:black;
+	z-index:3;
+	width:100%;
+	height:100%;
+	opacity:0.2;
+	
+	/*IE8*/
+	filter:alpha(opacity=20);
+}
+
+
+#dialogContent {
+	background-color: white;
+	position: absolute;
+	top: 36px;
+	left: 0px;
+	width: 100%;
+}
+
+.dialogBtn {
+	padding: 5px 30px;
+}
+
+#btnOk {
+	margin-right: 60px;
+}
+
+#contentMsg {
+    text-align: center;
+    margin: 42px 0;
+}
+
+#btnBar {
+	text-align: center;
+    padding: 0px 0px 40px 0px;
+}

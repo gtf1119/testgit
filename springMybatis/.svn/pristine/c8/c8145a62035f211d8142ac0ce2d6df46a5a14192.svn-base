@@ -1,0 +1,178 @@
+package com.ggg.controller;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.ggg.pojo.Goods;
+import com.ggg.pojo.GridCondition;
+import com.ggg.pojo.GridJSON;
+import com.ggg.pojo.Order;
+import com.ggg.pojo.OrderGoods;
+import com.ggg.pojo.ResJSON;
+import com.ggg.pojo.ShopCart;
+import com.ggg.pojo.User;
+import com.ggg.service.GoodsService;
+import com.ggg.service.OrderGoodsService;
+import com.ggg.service.OrderService;
+import com.ggg.service.ShopCartService;
+
+@Controller
+public class OrderController {
+
+	@Autowired
+	private OrderService orderServiceImpl;
+	
+	@Autowired
+	private OrderGoodsService orderGoodsServiceImpl;
+	
+	@Autowired
+	private ShopCartService cartServiceImpl;
+	
+	@Autowired
+	private GoodsService goodsService;
+	
+	@RequestMapping("/addOrder")
+	@ResponseBody
+	public ResJSON addOrder(HttpServletRequest request,HttpServletResponse response) throws Exception{
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("user");
+		if(user == null){
+			return new ResJSON();
+		}
+		ResJSON json = new ResJSON();
+		String payMoney = request.getParameter("payMoney");
+		String orderStr = request.getParameter("orderStr");
+		String[] orderArr = orderStr.split(",");
+		
+		try {
+			String orderId = orderServiceImpl.addOrder(new Order(payMoney,user));
+			int count = 0;
+			for(int i=0;i<orderArr.length;i++){
+				String[] orderArr2 = orderArr[i].split("\\|");
+				String goodsId = orderArr2[0];
+				String goodsNum = orderArr2[1];
+				Goods good =goodsService.queryById(goodsId);
+				String oldNum = good.getGoodsNum();
+				if(Integer.parseInt(goodsNum)> Integer.parseInt(oldNum)){
+					
+					json.setInfo(goodsId);
+					json.setErrMsg("库存不足");
+					orderGoodsServiceImpl.deleteByOrderId(orderId);
+					orderServiceImpl.deleteByOrderId(orderId);
+					return json;
+				}else{
+					orderGoodsServiceImpl.addOrderGoods(new OrderGoods(orderId,goodsId,goodsNum));
+					count ++;
+					
+				}
+			
+			}
+			
+			if(count == orderArr.length){
+				for(int i=0;i<orderArr.length;i++){
+					String[] orderArr2 = orderArr[i].split("\\|");
+					String goodsId = orderArr2[0];
+					Goods goods = new Goods();
+					goods.setGoodsId(goodsId);
+					cartServiceImpl.deleteShopCart(new ShopCart(user,goods));
+				}
+			}
+			
+			json.setIsSuccess("true");
+			json.setInfo(orderId);
+		} catch (Exception e) {
+			json.setIsSuccess("false");
+			json.setErrMsg(e.getMessage());
+		}
+		return json;
+	}
+	
+	@RequestMapping("/queryOrder")
+	@ResponseBody
+	public GridJSON queryOrder(HttpServletRequest request,HttpServletResponse response) throws Exception{
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("user");
+		if(user == null){
+			return new GridJSON();
+		}
+		GridCondition conditions = new GridCondition();
+		String condition = request.getParameter("condition");
+		String pageNum = request.getParameter("pageNum");
+		String pageSize = request.getParameter("pageSize");
+		conditions.setCondition(condition);
+		conditions.setPageNum(pageNum);
+		conditions.setPageSize(pageSize);
+		
+		GridJSON json = new GridJSON();
+		
+		List<Order> rows = orderServiceImpl.queryOrder(conditions);
+		int total = orderServiceImpl.queryOrderCount(conditions);
+		json.setRows(rows);
+		json.setTotal(total);
+		json.setCondition(condition);
+		return json;
+	} 
+	
+	
+	@RequestMapping("/updateStatus")
+	@ResponseBody
+	public ResJSON updateStatus(HttpServletRequest request,HttpServletResponse response) throws Exception{
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("user");
+		if(user == null){
+			return new ResJSON();
+		}
+		ResJSON json = new ResJSON();
+		
+		String status = request.getParameter("status");
+		String orderid = request.getParameter("orderid");
+		try {
+			if(status == "2"){
+				orderServiceImpl.updateStatus(new Order(orderid,status));
+				
+			}else{
+				orderServiceImpl.updateStatusNoTime(new Order(orderid,status));
+			}
+			json.setIsSuccess("true");
+		} catch (Exception e) {
+			json.setIsSuccess("false");
+			json.setErrMsg(e.getMessage());
+		}
+		return json;
+	}
+	
+	@RequestMapping("/delOrder")
+	@ResponseBody
+	public ResJSON delOrder(HttpServletRequest request,HttpServletResponse response){
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("user");
+		if(user == null){
+			return new ResJSON();
+		}
+		ResJSON json = new ResJSON();
+		String orderid = request.getParameter("orderid");
+		
+		try {
+			orderGoodsServiceImpl.deleteByOrderId(orderid);
+			orderServiceImpl.deleteByOrderId(orderid);
+			json.setIsSuccess("true");
+		} catch (Exception e) {
+			json.setIsSuccess("false");
+			json.setErrMsg(e.getMessage());
+		}
+		return json;
+	}
+	
+	
+	
+	
+	
+}

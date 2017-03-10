@@ -1,0 +1,68 @@
+.select{
+    
+    border: 2px solid #e6e6e6;
+    border-radius: 3px;
+    
+    padding: 3px 0 3px 5px;
+    position: relative;
+    cursor: pointer;
+}
+
+.select:hover{
+	border:2px solid #848080;
+}
+
+.txtShow{
+	padding:1px 130px 1px 5px;
+	overflow:hidden;
+	white-space:nowrap;	
+	width: 30px;
+	
+}
+
+.selList{
+	margin:0;
+	padding:0;
+    position: absolute;
+
+    left: -2px;
+    width: 100%;
+    border: 2px solid #a9a8a8;
+   	transition:all 250ms;
+	opacity:0;
+	z-index:20;
+	background: white;
+    overflow-y: auto;
+    max-height: 200px;
+}
+.gender{
+	
+    list-style: none;
+    padding: 3px 10px;
+    cursor: pointer;
+    user-select: none;
+  	transition: all 250ms;
+    overflow:hidden;
+}
+
+.gender:hover{
+   	background: #c3e2ff;
+}
+
+.hidden{
+	display:none;
+}
+
+.image{
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 2px;
+    padding: 1px;
+    user-select: none;
+    top: 3px;
+}
+
+.defaultSelected{
+	background: #a5cdf3;
+}

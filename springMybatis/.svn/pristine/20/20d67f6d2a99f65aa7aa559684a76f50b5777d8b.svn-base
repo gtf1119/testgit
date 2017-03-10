@@ -1,0 +1,177 @@
+body {
+	padding: 20px;
+	overflow:hidden;
+}
+
+#txtPanel {
+	width: 500px;
+	float: left;
+}
+
+label {
+	color: #333;
+}
+
+input[type='text'],input[type='password'],textarea {
+	font-size: 15px;
+	margin: 10px 0 12px 20px;
+	width: 80%;
+}
+
+.errTips {
+	color: red;
+	font-size: 15px;
+	position: relative;
+	float: right;
+	margin: -39px 10px 10px 0;
+	opacity: 0;
+	transition: all 250ms;
+	background-color: white;
+}
+
+.showErrTips {
+	opacity: 1;
+    margin: -39px 25px 10px 0px;
+}
+
+.line {
+	position: relative;
+}
+
+/*灰色占位符*/
+.placeholder {
+	font-size: 15px;
+	color: darkgrey;
+	position: absolute;
+	top: 38px;
+	left: 12px;
+	display: none; /*所有浏览器隐藏*/
+	display: block\0; /*IE8~IE11显示*/
+}
+
+/*在IE10以上版本中隐藏，最终只在IE7~IE9中显示，因为只有IE7~IE9不支持placeholder*/
+@media screen and (-ms-high-contrast: active) , ( -ms-high-contrast : none) {
+	.placeholder {
+		display: none; /*仅仅对>=IE10有效*/
+	}
+}
+
+/*登录失败的按钮样式*/
+.btnErr {
+	border: 2px solid #d60f00 !important;
+	background-color: #f5493d !important;
+}
+
+/*登录成功*/
+.btnSuccess {
+	border: 2px solid #009688 !important;
+	background-color: #25b788 !important;
+}
+
+#sltGoodsType {
+    float: right;
+    width: 392px;
+    margin-right: 10px;
+}
+
+#lblGoodsDes {
+    position: relative;
+    top: -32px;
+}
+
+input[type="file"]{
+    padding: 10px 0px 0px 10px;
+    width: 80%;
+}
+
+form{
+    width: 300px;
+    position: absolute;
+    right: 22px;
+    top: 88px;
+   	height: 262px;
+    border: 1px solid #c7c6c6;
+    overflow: auto;
+}
+
+#btnSave{
+    position: absolute;
+    bottom: 34px;
+    right: 38px;
+}
+
+
+#picTitle{
+	position: absolute;
+    right: 267px;
+    top: 36px;
+    font-size: 15px;
+}
+
+#btnAdd{
+    position: absolute;
+    bottom: 34px;
+    right: 238px;
+}
+
+.btnDel{
+    user-select: none;
+    border: 1px solid #c7c6c6;
+    padding: 0 5px;
+    cursor: pointer;
+    border-radius: 45%;
+    color: #a2a0a0;
+}
+
+.btnDel:hover{
+    background: #ffe7e7;
+    border: 1px solid #f5b9b9;
+    color: red;
+}
+
+.red{
+	color:red;
+}
+
+.goodsImg {
+	width: 40px;
+	height: 40px;
+	margin-right: 10px;
+}
+
+#imgList{
+    position: absolute;
+    left: 622px;
+    top: 16px;
+    height: 56px;
+    overflow: auto;
+    width: 225px;
+}
+
+#txtGoodsDes{
+	padding: 5px 0 0 10px;
+	border:2px solid #e6e6e6;
+}
+
+
+.imgContainer{
+	position:relative;
+	 float: left;
+}
+
+.btnImgDel{
+	display:none;
+	position: absolute;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 35px;
+    cursor:pointer;
+}
+
+.imgContainer:hover .btnImgDel {
+	display: block;
+}
+   
